@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package relayer.v1;
+
+option go_package = "xinyuan_tech/relayer-service/api/relayer/v1;v1";
+
+import "google/api/annotations.proto";
+
+service Relayer {
+  // SubmitTransaction submits a meta-transaction to be relayed on-chain
+  rpc SubmitTransaction (SubmitTransactionRequest) returns (SubmitTransactionReply) {
+    option (google.api.http) = {
+      post: "/v1/submit"
+      body: "*"
+    };
+  }
+
+  // GetTransactionStatus queries the status of a submitted transaction
+  rpc GetTransactionStatus (GetTransactionStatusRequest) returns (GetTransactionStatusReply) {
+    option (google.api.http) = {
+      get: "/v1/status/{task_id}"
+    };
+  }
+
+  // GetOperatorBalance returns the operator wallet balance
+  rpc GetOperatorBalance (GetOperatorBalanceRequest) returns (GetOperatorBalanceReply) {
+    option (google.api.http) = {
+      get: "/v1/operator/balance"
+    };
+  }
+}
+
+message SubmitTransactionRequest {
+  string to = 1; // Target contract address
+  string data = 2; // Encoded function call data
+  string signature = 3; // User signature
+  string forwarder = 4; // Forwarder contract address (optional)
+  int64 gas_limit = 5; // Estimated gas limit
+}
+
+message SubmitTransactionReply {
+  string task_id = 1; // Unique task ID for tracking
+  bool success = 2;
+  string message = 3;
+}
+
+message GetTransactionStatusRequest {
+  string task_id = 1;
+}
+
+message TransactionStatus {
+  string task_id = 1;
+  string tx_hash = 2;
+  string status = 3; // PENDING, MINED, FAILED, REPLACED
+  int64 gas_price = 4;
+  int64 block_number = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+}
+
+message GetTransactionStatusReply {
+  TransactionStatus status = 1;
+}
+
+message GetOperatorBalanceRequest {
+  string operator_address = 1; // Optional, default to primary operator
+}
+
+message GetOperatorBalanceReply {
+  string operator_address = 1;
+  string balance = 2; // Balance in wei as string
+  string balance_eth = 3; // Balance in ETH
+}

@@ -1,0 +1,56 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "xinyuan_tech/relayer-service/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  Chain chain = 3;
+  Operator operator = 4;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration read_timeout = 3;
+    google.protobuf.Duration write_timeout = 4;
+  }
+  Database database = 1;
+  Redis redis = 2;
+}
+
+message Chain {
+  string rpc_url = 1;
+  string chain_id = 2;
+  int64 gas_price_multiplier = 3; // Percentage multiplier (e.g., 110 = 110%)
+  int64 max_retry = 4;
+}
+
+message Operator {
+  string private_key = 1; // Encrypted or from KMS in production
+  string address = 2;
+  int64 min_balance_wei = 3; // Alert threshold
+}
