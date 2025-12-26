@@ -6,8 +6,27 @@ option go_package = "xinyuan_tech/relayer-service/api/relayer/v1;v1";
 
 import "google/api/annotations.proto";
 
+// TransactionType 交易类型枚举
+enum TransactionType {
+  TRANSACTION_TYPE_UNSPECIFIED = 0;
+  WALLET_DEPLOYMENT = 1;  // 钱包部署
+  TOKEN_APPROVAL = 2;     // 代币授权
+  CTF_SPLIT = 3;          // CTF 拆分
+  CTF_MERGE = 4;          // CTF 合并
+  CTF_REDEEM = 5;         // CTF 赎回
+  CLOB_ORDER = 6;         // CLOB 订单执行
+  CUSTOM = 7;             // 自定义交易
+}
+
+// WalletType 钱包类型枚举
+enum WalletType {
+  WALLET_TYPE_UNSPECIFIED = 0;
+  SAFE = 1;    // Gnosis Safe Wallet
+  PROXY = 2;   // Custom Proxy Wallet
+}
+
 service Relayer {
-  // SubmitTransaction submits a meta-transaction to be relayed on-chain
+  // SubmitTransaction 提交单笔交易
   rpc SubmitTransaction (SubmitTransactionRequest) returns (SubmitTransactionReply) {
     option (google.api.http) = {
       post: "/v1/submit"
@@ -15,14 +34,37 @@ service Relayer {
     };
   }
 
-  // GetTransactionStatus queries the status of a submitted transaction
+  // SubmitBatchTransaction 提交批量交易
+  rpc SubmitBatchTransaction (SubmitBatchTransactionRequest) returns (SubmitBatchTransactionReply) {
+    option (google.api.http) = {
+      post: "/v1/submit/batch"
+      body: "*"
+    };
+  }
+
+  // DeployWallet 部署钱包（Safe Wallet）
+  rpc DeployWallet (DeployWalletRequest) returns (DeployWalletReply) {
+    option (google.api.http) = {
+      post: "/v1/wallet/deploy"
+      body: "*"
+    };
+  }
+
+  // GetTransactionStatus 查询交易状态
   rpc GetTransactionStatus (GetTransactionStatusRequest) returns (GetTransactionStatusReply) {
     option (google.api.http) = {
       get: "/v1/status/{task_id}"
     };
   }
 
-  // GetOperatorBalance returns the operator wallet balance
+  // GetBuilderFeeStats 查询 Builder 费用统计
+  rpc GetBuilderFeeStats (GetBuilderFeeStatsRequest) returns (GetBuilderFeeStatsReply) {
+    option (google.api.http) = {
+      get: "/v1/builder/fees"
+    };
+  }
+
+  // GetOperatorBalance 查询 Operator 余额
   rpc GetOperatorBalance (GetOperatorBalanceRequest) returns (GetOperatorBalanceReply) {
     option (google.api.http) = {
       get: "/v1/operator/balance"
@@ -30,44 +72,338 @@ service Relayer {
   }
 }
 
+// SubmitTransactionRequest 提交交易请求
 message SubmitTransactionRequest {
-  string to = 1; // Target contract address
-  string data = 2; // Encoded function call data
-  string signature = 3; // User signature
-  string forwarder = 4; // Forwarder contract address (optional)
-  int64 gas_limit = 5; // Estimated gas limit
+  string to = 1;                    // 目标合约地址
+  string data = 2;                  // 编码后的函数调用数据（hex）
+  string signature = 3;             // 用户签名（消息签名，不是交易签名）
+  string forwarder = 4;             // 转发器合约地址（可选）
+  int64 gas_limit = 5;              // 预估 Gas Limit（可选）
+  TransactionType transaction_type = 6; // 交易类型
+  string value = 7;                 // 交易金额（hex，通常为 "0x0"）
 }
 
+// SubmitTransactionReply 提交交易响应
 message SubmitTransactionReply {
-  string task_id = 1; // Unique task ID for tracking
+  string task_id = 1;               // 唯一任务 ID
   bool success = 2;
   string message = 3;
 }
 
+// SubmitBatchTransactionRequest 批量提交交易请求
+message SubmitBatchTransactionRequest {
+  repeated TransactionRequest transactions = 1; // 交易数组
+  string builder_api_key = 2;       // Builder API Key（用于费用追踪）
+}
+
+// TransactionRequest 单笔交易请求（用于批量）
+message TransactionRequest {
+  string to = 1;
+  string data = 2;
+  string signature = 3;
+  string forwarder = 4;
+  int64 gas_limit = 5;
+  TransactionType transaction_type = 6;
+  string value = 7;
+}
+
+// SubmitBatchTransactionReply 批量提交交易响应
+message SubmitBatchTransactionReply {
+  repeated string task_ids = 1;      // 任务 ID 数组
+  bool success = 2;
+  string message = 3;
+}
+
+// DeployWalletRequest 部署钱包请求
+message DeployWalletRequest {
+  WalletType wallet_type = 1;       // 钱包类型
+  repeated string owners = 2;        // 所有者地址（仅 Safe Wallet 需要）
+}
+
+// DeployWalletReply 部署钱包响应
+message DeployWalletReply {
+  string wallet_address = 1;        // 部署的钱包地址
+  string task_id = 2;                // 任务 ID
+  bool success = 3;
+  string message = 4;
+}
+
+// GetTransactionStatusRequest 查询交易状态请求
 message GetTransactionStatusRequest {
   string task_id = 1;
 }
 
+// TransactionStatus 交易状态
 message TransactionStatus {
   string task_id = 1;
   string tx_hash = 2;
-  string status = 3; // PENDING, MINED, FAILED, REPLACED
-  int64 gas_price = 4;
+  string status = 3;                // PENDING, MINED, FAILED, REPLACED
+  string gas_price = 4;             // Gas 价格（字符串，支持大整数）
   int64 block_number = 5;
-  int64 created_at = 6;
-  int64 updated_at = 7;
+  int64 gas_used = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
 }
 
+// GetTransactionStatusReply 查询交易状态响应
 message GetTransactionStatusReply {
   TransactionStatus status = 1;
 }
 
-message GetOperatorBalanceRequest {
-  string operator_address = 1; // Optional, default to primary operator
+// GetBuilderFeeStatsRequest 查询 Builder 费用统计请求
+message GetBuilderFeeStatsRequest {
+  string api_key = 1;                // Builder API Key
+  int64 start_time = 2;              // 开始时间（Unix 时间戳）
+  int64 end_time = 3;                // 结束时间（Unix 时间戳）
 }
 
+// FeeStatsByType 按类型统计的费用
+message FeeStatsByType {
+  int64 count = 1;                   // 交易数量
+  string gas_used = 2;               // Gas 消耗（字符串）
+  string cost = 3;                   // 总成本（MATIC，字符串）
+}
+
+// GetBuilderFeeStatsReply 查询 Builder 费用统计响应
+message GetBuilderFeeStatsReply {
+  int64 total_transactions = 1;      // 总交易数
+  string total_gas_used = 2;         // 总 Gas 消耗（字符串）
+  string total_cost = 3;             // 总成本（MATIC，字符串）
+  map<string, FeeStatsByType> by_type = 4; // 按类型统计（key 为交易类型字符串）
+}
+
+// GetOperatorBalanceRequest 查询 Operator 余额请求
+message GetOperatorBalanceRequest {
+  string operator_address = 1;       // Operator 地址（可选，默认使用主 Operator）
+}
+
+// GetOperatorBalanceReply 查询 Operator 余额响应
 message GetOperatorBalanceReply {
   string operator_address = 1;
-  string balance = 2; // Balance in wei as string
-  string balance_eth = 3; // Balance in ETH
+  string balance = 2;                // 余额（wei，字符串）
+  string balance_matic = 3;         // 余额（MATIC，字符串）
+}
+
+// SubmitTransactionRequest 提交交易请求
+message SubmitTransactionRequest {
+  string to = 1;                    // 目标合约地址
+  string data = 2;                  // 编码后的函数调用数据（hex）
+  string signature = 3;             // 用户签名（消息签名，不是交易签名）
+  string forwarder = 4;             // 转发器合约地址（可选）
+  int64 gas_limit = 5;              // 预估 Gas Limit（可选）
+  TransactionType transaction_type = 6; // 交易类型
+  string value = 7;                 // 交易金额（hex，通常为 "0x0"）
+}
+
+// SubmitTransactionReply 提交交易响应
+message SubmitTransactionReply {
+  string task_id = 1;               // 唯一任务 ID
+  bool success = 2;
+  string message = 3;
+}
+
+// SubmitBatchTransactionRequest 批量提交交易请求
+message SubmitBatchTransactionRequest {
+  repeated TransactionRequest transactions = 1; // 交易数组
+  string builder_api_key = 2;       // Builder API Key（用于费用追踪）
+}
+
+// TransactionRequest 单笔交易请求（用于批量）
+message TransactionRequest {
+  string to = 1;
+  string data = 2;
+  string signature = 3;
+  string forwarder = 4;
+  int64 gas_limit = 5;
+  TransactionType transaction_type = 6;
+  string value = 7;
+}
+
+// SubmitBatchTransactionReply 批量提交交易响应
+message SubmitBatchTransactionReply {
+  repeated string task_ids = 1;      // 任务 ID 数组
+  bool success = 2;
+  string message = 3;
+}
+
+// DeployWalletRequest 部署钱包请求
+message DeployWalletRequest {
+  WalletType wallet_type = 1;       // 钱包类型
+  repeated string owners = 2;        // 所有者地址（仅 Safe Wallet 需要）
+}
+
+// DeployWalletReply 部署钱包响应
+message DeployWalletReply {
+  string wallet_address = 1;        // 部署的钱包地址
+  string task_id = 2;                // 任务 ID
+  bool success = 3;
+  string message = 4;
+}
+
+// GetTransactionStatusRequest 查询交易状态请求
+message GetTransactionStatusRequest {
+  string task_id = 1;
+}
+
+// TransactionStatus 交易状态
+message TransactionStatus {
+  string task_id = 1;
+  string tx_hash = 2;
+  string status = 3;                // PENDING, MINED, FAILED, REPLACED
+  string gas_price = 4;             // Gas 价格（字符串，支持大整数）
+  int64 block_number = 5;
+  int64 gas_used = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+
+// GetTransactionStatusReply 查询交易状态响应
+message GetTransactionStatusReply {
+  TransactionStatus status = 1;
+}
+
+// GetBuilderFeeStatsRequest 查询 Builder 费用统计请求
+message GetBuilderFeeStatsRequest {
+  string api_key = 1;                // Builder API Key
+  int64 start_time = 2;              // 开始时间（Unix 时间戳）
+  int64 end_time = 3;                // 结束时间（Unix 时间戳）
+}
+
+// FeeStatsByType 按类型统计的费用
+message FeeStatsByType {
+  int64 count = 1;                   // 交易数量
+  string gas_used = 2;               // Gas 消耗（字符串）
+  string cost = 3;                   // 总成本（MATIC，字符串）
+}
+
+// GetBuilderFeeStatsReply 查询 Builder 费用统计响应
+message GetBuilderFeeStatsReply {
+  int64 total_transactions = 1;      // 总交易数
+  string total_gas_used = 2;         // 总 Gas 消耗（字符串）
+  string total_cost = 3;             // 总成本（MATIC，字符串）
+  map<string, FeeStatsByType> by_type = 4; // 按类型统计（key 为交易类型字符串）
+}
+
+// GetOperatorBalanceRequest 查询 Operator 余额请求
+message GetOperatorBalanceRequest {
+  string operator_address = 1;       // Operator 地址（可选，默认使用主 Operator）
+}
+
+// GetOperatorBalanceReply 查询 Operator 余额响应
+message GetOperatorBalanceReply {
+  string operator_address = 1;
+  string balance = 2;                // 余额（wei，字符串）
+  string balance_matic = 3;         // 余额（MATIC，字符串）
+}
+
+// SubmitTransactionRequest 提交交易请求
+message SubmitTransactionRequest {
+  string to = 1;                    // 目标合约地址
+  string data = 2;                  // 编码后的函数调用数据（hex）
+  string signature = 3;             // 用户签名（消息签名，不是交易签名）
+  string forwarder = 4;             // 转发器合约地址（可选）
+  int64 gas_limit = 5;              // 预估 Gas Limit（可选）
+  TransactionType transaction_type = 6; // 交易类型
+  string value = 7;                 // 交易金额（hex，通常为 "0x0"）
+}
+
+// SubmitTransactionReply 提交交易响应
+message SubmitTransactionReply {
+  string task_id = 1;               // 唯一任务 ID
+  bool success = 2;
+  string message = 3;
+}
+
+// SubmitBatchTransactionRequest 批量提交交易请求
+message SubmitBatchTransactionRequest {
+  repeated TransactionRequest transactions = 1; // 交易数组
+  string builder_api_key = 2;       // Builder API Key（用于费用追踪）
+}
+
+// TransactionRequest 单笔交易请求（用于批量）
+message TransactionRequest {
+  string to = 1;
+  string data = 2;
+  string signature = 3;
+  string forwarder = 4;
+  int64 gas_limit = 5;
+  TransactionType transaction_type = 6;
+  string value = 7;
+}
+
+// SubmitBatchTransactionReply 批量提交交易响应
+message SubmitBatchTransactionReply {
+  repeated string task_ids = 1;      // 任务 ID 数组
+  bool success = 2;
+  string message = 3;
+}
+
+// DeployWalletRequest 部署钱包请求
+message DeployWalletRequest {
+  WalletType wallet_type = 1;       // 钱包类型
+  repeated string owners = 2;        // 所有者地址（仅 Safe Wallet 需要）
+}
+
+// DeployWalletReply 部署钱包响应
+message DeployWalletReply {
+  string wallet_address = 1;        // 部署的钱包地址
+  string task_id = 2;                // 任务 ID
+  bool success = 3;
+  string message = 4;
+}
+
+// GetTransactionStatusRequest 查询交易状态请求
+message GetTransactionStatusRequest {
+  string task_id = 1;
+}
+
+// TransactionStatus 交易状态
+message TransactionStatus {
+  string task_id = 1;
+  string tx_hash = 2;
+  string status = 3;                // PENDING, MINED, FAILED, REPLACED
+  string gas_price = 4;             // Gas 价格（字符串，支持大整数）
+  int64 block_number = 5;
+  int64 gas_used = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+
+// GetTransactionStatusReply 查询交易状态响应
+message GetTransactionStatusReply {
+  TransactionStatus status = 1;
+}
+
+// GetBuilderFeeStatsRequest 查询 Builder 费用统计请求
+message GetBuilderFeeStatsRequest {
+  string api_key = 1;                // Builder API Key
+  int64 start_time = 2;              // 开始时间（Unix 时间戳）
+  int64 end_time = 3;                // 结束时间（Unix 时间戳）
+}
+
+// FeeStatsByType 按类型统计的费用
+message FeeStatsByType {
+  int64 count = 1;                   // 交易数量
+  string gas_used = 2;               // Gas 消耗（字符串）
+  string cost = 3;                   // 总成本（MATIC，字符串）
+}
+
+// GetBuilderFeeStatsReply 查询 Builder 费用统计响应
+message GetBuilderFeeStatsReply {
+  int64 total_transactions = 1;      // 总交易数
+  string total_gas_used = 2;         // 总 Gas 消耗（字符串）
+  string total_cost = 3;             // 总成本（MATIC，字符串）
+  map<string, FeeStatsByType> by_type = 4; // 按类型统计（key 为交易类型字符串）
+}
+
+// GetOperatorBalanceRequest 查询 Operator 余额请求
+message GetOperatorBalanceRequest {
+  string operator_address = 1;       // Operator 地址（可选，默认使用主 Operator）
+}
+
+// GetOperatorBalanceReply 查询 Operator 余额响应
+message GetOperatorBalanceReply {
+  string operator_address = 1;
+  string balance = 2;                // 余额（wei，字符串）
+  string balance_matic = 3;         // 余额（MATIC，字符串）
 }

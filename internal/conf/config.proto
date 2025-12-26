@@ -10,6 +10,8 @@ message Bootstrap {
   Data data = 2;
   Chain chain = 3;
   Operator operator = 4;
+  Builder builder = 5;
+  Security security = 6;
 }
 
 message Server {
@@ -38,8 +40,15 @@ message Data {
     google.protobuf.Duration read_timeout = 3;
     google.protobuf.Duration write_timeout = 4;
   }
+  message RocketMQ {
+    string name_server = 1;      // NameServer 地址
+    string producer_group = 2;   // Producer Group
+    string topic = 3;            // 默认 Topic
+    int32 retry_times = 4;       // 重试次数
+  }
   Database database = 1;
   Redis redis = 2;
+  RocketMQ rocketmq = 3;
 }
 
 message Chain {
@@ -50,7 +59,76 @@ message Chain {
 }
 
 message Operator {
-  string private_key = 1; // Encrypted or from KMS in production
-  string address = 2;
-  int64 min_balance_wei = 3; // Alert threshold
+  repeated OperatorWallet wallets = 1; // Operator 钱包池
+  int64 min_balance_wei = 2;          // 余额告警阈值
+}
+
+message OperatorWallet {
+  string address = 1;
+  string private_key = 2;             // 加密存储或从 KMS 获取
+  bool active = 3;                    // 是否激活
+}
+
+message Builder {
+  int64 timestamp_window_ms = 1;      // 时间戳验证窗口（毫秒，默认 5 分钟）
+  bool enable_auth = 2;               // 是否启用 Builder 认证
+}
+
+message Security {
+  repeated string contract_whitelist = 1; // 合约地址白名单
+  int64 rate_limit_per_minute = 2;        // 每个 Builder 的速率限制（每分钟）
+  string kms_type = 3;                    // KMS 类型（aws-kms, vault, local）
+  string kms_config = 4;                  // KMS 配置（JSON 字符串）
+}
+
+  int64 max_retry = 4;
+}
+
+message Operator {
+  repeated OperatorWallet wallets = 1; // Operator 钱包池
+  int64 min_balance_wei = 2;          // 余额告警阈值
+}
+
+message OperatorWallet {
+  string address = 1;
+  string private_key = 2;             // 加密存储或从 KMS 获取
+  bool active = 3;                    // 是否激活
+}
+
+message Builder {
+  int64 timestamp_window_ms = 1;      // 时间戳验证窗口（毫秒，默认 5 分钟）
+  bool enable_auth = 2;               // 是否启用 Builder 认证
+}
+
+message Security {
+  repeated string contract_whitelist = 1; // 合约地址白名单
+  int64 rate_limit_per_minute = 2;        // 每个 Builder 的速率限制（每分钟）
+  string kms_type = 3;                    // KMS 类型（aws-kms, vault, local）
+  string kms_config = 4;                  // KMS 配置（JSON 字符串）
+}
+
+  int64 max_retry = 4;
+}
+
+message Operator {
+  repeated OperatorWallet wallets = 1; // Operator 钱包池
+  int64 min_balance_wei = 2;          // 余额告警阈值
+}
+
+message OperatorWallet {
+  string address = 1;
+  string private_key = 2;             // 加密存储或从 KMS 获取
+  bool active = 3;                    // 是否激活
+}
+
+message Builder {
+  int64 timestamp_window_ms = 1;      // 时间戳验证窗口（毫秒，默认 5 分钟）
+  bool enable_auth = 2;               // 是否启用 Builder 认证
+}
+
+message Security {
+  repeated string contract_whitelist = 1; // 合约地址白名单
+  int64 rate_limit_per_minute = 2;        // 每个 Builder 的速率限制（每分钟）
+  string kms_type = 3;                    // KMS 类型（aws-kms, vault, local）
+  string kms_config = 4;                  // KMS 配置（JSON 字符串）
 }
