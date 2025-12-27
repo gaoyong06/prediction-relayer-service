@@ -70,6 +70,21 @@ service Relayer {
       get: "/v1/operator/balance"
     };
   }
+
+  // SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+  rpc SubmitMatch (SubmitMatchRequest) returns (SubmitMatchReply) {
+    option (google.api.http) = {
+      post: "/v1/match"
+      body: "*"
+    };
+  }
+
+  // GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+  rpc GetTransactionHashByOrderID (GetTransactionHashByOrderIDRequest) returns (GetTransactionHashByOrderIDReply) {
+    option (google.api.http) = {
+      get: "/v1/orders/{order_id}/transaction"
+    };
+  }
 }
 
 // SubmitTransactionRequest 提交交易请求
@@ -182,4 +197,57 @@ message GetOperatorBalanceReply {
   string operator_address = 1;
   string balance = 2;                // 余额（wei，字符串）
   string balance_matic = 3;         // 余额（MATIC，字符串）
+}
+
+// Order 订单信息（用于匹配）
+message Order {
+  string id = 1;                     // 订单 ID
+  string maker = 2;                  // Maker 地址
+  string signer = 3;                 // 签名者地址
+  string taker = 4;                  // Taker 地址
+  string token_id = 5;               // Token ID
+  string maker_amount = 6;           // Maker 数量（BigInt as string）
+  string taker_amount = 7;           // Taker 数量（BigInt as string）
+  string side = 8;                   // BUY or SELL
+  string price = 9;                  // 价格（BigInt as string）
+  string size = 10;                  // 数量（BigInt as string）
+  string remaining = 11;              // 剩余数量（BigInt as string）
+  int64 expiration = 12;             // 过期时间戳
+  string salt = 13;                  // 随机盐值
+  string nonce = 14;                 // Nonce
+  string fee_rate_bps = 15;          // 手续费率（基点）
+  string signature = 16;             // EIP-712 签名
+  int32 signature_type = 17;         // 签名类型：0=EOA, 1=POLY_PROXY, 2=GNOSIS_SAFE
+  string funder = 18;                // 资金地址
+  string order_type = 19;            // 订单类型：GTC, FOK, IOC
+  string owner = 20;                 // 订单所有者（API key）
+}
+
+// SubmitMatchRequest 提交匹配请求
+message SubmitMatchRequest {
+  Order maker_order = 1;             // Maker 订单
+  Order taker_order = 2;             // Taker 订单
+  string price = 3;                  // 匹配价格（BigInt as string）
+  string size = 4;                   // 匹配数量（BigInt as string）
+  string token_id = 5;               // Token ID
+  int64 timestamp = 6;               // 匹配时间戳
+}
+
+// SubmitMatchReply 提交匹配响应
+message SubmitMatchReply {
+  string task_id = 1;                // 任务 ID
+  bool success = 2;
+  string message = 3;
+}
+
+// GetTransactionHashByOrderIDRequest 根据订单 ID 获取交易哈希请求
+message GetTransactionHashByOrderIDRequest {
+  string order_id = 1;                // 订单 ID
+}
+
+// GetTransactionHashByOrderIDReply 根据订单 ID 获取交易哈希响应
+message GetTransactionHashByOrderIDReply {
+  string transaction_hash = 1;        // 交易哈希
+  bool success = 2;
+  string message = 3;
 }

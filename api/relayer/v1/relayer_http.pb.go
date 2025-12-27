@@ -22,8 +22,10 @@ const _ = http.SupportPackageIsVersion1
 const OperationRelayerDeployWallet = "/relayer.v1.Relayer/DeployWallet"
 const OperationRelayerGetBuilderFeeStats = "/relayer.v1.Relayer/GetBuilderFeeStats"
 const OperationRelayerGetOperatorBalance = "/relayer.v1.Relayer/GetOperatorBalance"
+const OperationRelayerGetTransactionHashByOrderID = "/relayer.v1.Relayer/GetTransactionHashByOrderID"
 const OperationRelayerGetTransactionStatus = "/relayer.v1.Relayer/GetTransactionStatus"
 const OperationRelayerSubmitBatchTransaction = "/relayer.v1.Relayer/SubmitBatchTransaction"
+const OperationRelayerSubmitMatch = "/relayer.v1.Relayer/SubmitMatch"
 const OperationRelayerSubmitTransaction = "/relayer.v1.Relayer/SubmitTransaction"
 
 type RelayerHTTPServer interface {
@@ -33,10 +35,14 @@ type RelayerHTTPServer interface {
 	GetBuilderFeeStats(context.Context, *GetBuilderFeeStatsRequest) (*GetBuilderFeeStatsReply, error)
 	// GetOperatorBalance GetOperatorBalance 查询 Operator 余额
 	GetOperatorBalance(context.Context, *GetOperatorBalanceRequest) (*GetOperatorBalanceReply, error)
+	// GetTransactionHashByOrderID GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+	GetTransactionHashByOrderID(context.Context, *GetTransactionHashByOrderIDRequest) (*GetTransactionHashByOrderIDReply, error)
 	// GetTransactionStatus GetTransactionStatus 查询交易状态
 	GetTransactionStatus(context.Context, *GetTransactionStatusRequest) (*GetTransactionStatusReply, error)
 	// SubmitBatchTransaction SubmitBatchTransaction 提交批量交易
 	SubmitBatchTransaction(context.Context, *SubmitBatchTransactionRequest) (*SubmitBatchTransactionReply, error)
+	// SubmitMatch SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+	SubmitMatch(context.Context, *SubmitMatchRequest) (*SubmitMatchReply, error)
 	// SubmitTransaction SubmitTransaction 提交单笔交易
 	SubmitTransaction(context.Context, *SubmitTransactionRequest) (*SubmitTransactionReply, error)
 }
@@ -49,6 +55,8 @@ func RegisterRelayerHTTPServer(s *http.Server, srv RelayerHTTPServer) {
 	r.GET("/v1/status/{task_id}", _Relayer_GetTransactionStatus0_HTTP_Handler(srv))
 	r.GET("/v1/builder/fees", _Relayer_GetBuilderFeeStats0_HTTP_Handler(srv))
 	r.GET("/v1/operator/balance", _Relayer_GetOperatorBalance0_HTTP_Handler(srv))
+	r.POST("/v1/match", _Relayer_SubmitMatch0_HTTP_Handler(srv))
+	r.GET("/v1/orders/{order_id}/transaction", _Relayer_GetTransactionHashByOrderID0_HTTP_Handler(srv))
 }
 
 func _Relayer_SubmitTransaction0_HTTP_Handler(srv RelayerHTTPServer) func(ctx http.Context) error {
@@ -177,6 +185,50 @@ func _Relayer_GetOperatorBalance0_HTTP_Handler(srv RelayerHTTPServer) func(ctx h
 	}
 }
 
+func _Relayer_SubmitMatch0_HTTP_Handler(srv RelayerHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in SubmitMatchRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationRelayerSubmitMatch)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.SubmitMatch(ctx, req.(*SubmitMatchRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*SubmitMatchReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _Relayer_GetTransactionHashByOrderID0_HTTP_Handler(srv RelayerHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GetTransactionHashByOrderIDRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationRelayerGetTransactionHashByOrderID)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetTransactionHashByOrderID(ctx, req.(*GetTransactionHashByOrderIDRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*GetTransactionHashByOrderIDReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type RelayerHTTPClient interface {
 	// DeployWallet DeployWallet 部署钱包（Safe Wallet）
 	DeployWallet(ctx context.Context, req *DeployWalletRequest, opts ...http.CallOption) (rsp *DeployWalletReply, err error)
@@ -184,10 +236,14 @@ type RelayerHTTPClient interface {
 	GetBuilderFeeStats(ctx context.Context, req *GetBuilderFeeStatsRequest, opts ...http.CallOption) (rsp *GetBuilderFeeStatsReply, err error)
 	// GetOperatorBalance GetOperatorBalance 查询 Operator 余额
 	GetOperatorBalance(ctx context.Context, req *GetOperatorBalanceRequest, opts ...http.CallOption) (rsp *GetOperatorBalanceReply, err error)
+	// GetTransactionHashByOrderID GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+	GetTransactionHashByOrderID(ctx context.Context, req *GetTransactionHashByOrderIDRequest, opts ...http.CallOption) (rsp *GetTransactionHashByOrderIDReply, err error)
 	// GetTransactionStatus GetTransactionStatus 查询交易状态
 	GetTransactionStatus(ctx context.Context, req *GetTransactionStatusRequest, opts ...http.CallOption) (rsp *GetTransactionStatusReply, err error)
 	// SubmitBatchTransaction SubmitBatchTransaction 提交批量交易
 	SubmitBatchTransaction(ctx context.Context, req *SubmitBatchTransactionRequest, opts ...http.CallOption) (rsp *SubmitBatchTransactionReply, err error)
+	// SubmitMatch SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+	SubmitMatch(ctx context.Context, req *SubmitMatchRequest, opts ...http.CallOption) (rsp *SubmitMatchReply, err error)
 	// SubmitTransaction SubmitTransaction 提交单笔交易
 	SubmitTransaction(ctx context.Context, req *SubmitTransactionRequest, opts ...http.CallOption) (rsp *SubmitTransactionReply, err error)
 }
@@ -242,6 +298,20 @@ func (c *RelayerHTTPClientImpl) GetOperatorBalance(ctx context.Context, in *GetO
 	return &out, nil
 }
 
+// GetTransactionHashByOrderID GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+func (c *RelayerHTTPClientImpl) GetTransactionHashByOrderID(ctx context.Context, in *GetTransactionHashByOrderIDRequest, opts ...http.CallOption) (*GetTransactionHashByOrderIDReply, error) {
+	var out GetTransactionHashByOrderIDReply
+	pattern := "/v1/orders/{order_id}/transaction"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationRelayerGetTransactionHashByOrderID))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
 // GetTransactionStatus GetTransactionStatus 查询交易状态
 func (c *RelayerHTTPClientImpl) GetTransactionStatus(ctx context.Context, in *GetTransactionStatusRequest, opts ...http.CallOption) (*GetTransactionStatusReply, error) {
 	var out GetTransactionStatusReply
@@ -262,6 +332,20 @@ func (c *RelayerHTTPClientImpl) SubmitBatchTransaction(ctx context.Context, in *
 	pattern := "/v1/submit/batch"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationRelayerSubmitBatchTransaction))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// SubmitMatch SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+func (c *RelayerHTTPClientImpl) SubmitMatch(ctx context.Context, in *SubmitMatchRequest, opts ...http.CallOption) (*SubmitMatchReply, error) {
+	var out SubmitMatchReply
+	pattern := "/v1/match"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationRelayerSubmitMatch))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

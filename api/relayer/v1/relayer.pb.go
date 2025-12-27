@@ -1108,6 +1108,455 @@ func (x *GetOperatorBalanceReply) GetBalanceMatic() string {
 	return ""
 }
 
+// Order 订单信息（用于匹配）
+type Order struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                              // 订单 ID
+	Maker         string                 `protobuf:"bytes,2,opt,name=maker,proto3" json:"maker,omitempty"`                                        // Maker 地址
+	Signer        string                 `protobuf:"bytes,3,opt,name=signer,proto3" json:"signer,omitempty"`                                      // 签名者地址
+	Taker         string                 `protobuf:"bytes,4,opt,name=taker,proto3" json:"taker,omitempty"`                                        // Taker 地址
+	TokenId       string                 `protobuf:"bytes,5,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`                     // Token ID
+	MakerAmount   string                 `protobuf:"bytes,6,opt,name=maker_amount,json=makerAmount,proto3" json:"maker_amount,omitempty"`         // Maker 数量（BigInt as string）
+	TakerAmount   string                 `protobuf:"bytes,7,opt,name=taker_amount,json=takerAmount,proto3" json:"taker_amount,omitempty"`         // Taker 数量（BigInt as string）
+	Side          string                 `protobuf:"bytes,8,opt,name=side,proto3" json:"side,omitempty"`                                          // BUY or SELL
+	Price         string                 `protobuf:"bytes,9,opt,name=price,proto3" json:"price,omitempty"`                                        // 价格（BigInt as string）
+	Size          string                 `protobuf:"bytes,10,opt,name=size,proto3" json:"size,omitempty"`                                         // 数量（BigInt as string）
+	Remaining     string                 `protobuf:"bytes,11,opt,name=remaining,proto3" json:"remaining,omitempty"`                               // 剩余数量（BigInt as string）
+	Expiration    int64                  `protobuf:"varint,12,opt,name=expiration,proto3" json:"expiration,omitempty"`                            // 过期时间戳
+	Salt          string                 `protobuf:"bytes,13,opt,name=salt,proto3" json:"salt,omitempty"`                                         // 随机盐值
+	Nonce         string                 `protobuf:"bytes,14,opt,name=nonce,proto3" json:"nonce,omitempty"`                                       // Nonce
+	FeeRateBps    string                 `protobuf:"bytes,15,opt,name=fee_rate_bps,json=feeRateBps,proto3" json:"fee_rate_bps,omitempty"`         // 手续费率（基点）
+	Signature     string                 `protobuf:"bytes,16,opt,name=signature,proto3" json:"signature,omitempty"`                               // EIP-712 签名
+	SignatureType int32                  `protobuf:"varint,17,opt,name=signature_type,json=signatureType,proto3" json:"signature_type,omitempty"` // 签名类型：0=EOA, 1=POLY_PROXY, 2=GNOSIS_SAFE
+	Funder        string                 `protobuf:"bytes,18,opt,name=funder,proto3" json:"funder,omitempty"`                                     // 资金地址
+	OrderType     string                 `protobuf:"bytes,19,opt,name=order_type,json=orderType,proto3" json:"order_type,omitempty"`              // 订单类型：GTC, FOK, IOC
+	Owner         string                 `protobuf:"bytes,20,opt,name=owner,proto3" json:"owner,omitempty"`                                       // 订单所有者（API key）
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Order) Reset() {
+	*x = Order{}
+	mi := &file_relayer_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Order) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Order) ProtoMessage() {}
+
+func (x *Order) ProtoReflect() protoreflect.Message {
+	mi := &file_relayer_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Order.ProtoReflect.Descriptor instead.
+func (*Order) Descriptor() ([]byte, []int) {
+	return file_relayer_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Order) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Order) GetMaker() string {
+	if x != nil {
+		return x.Maker
+	}
+	return ""
+}
+
+func (x *Order) GetSigner() string {
+	if x != nil {
+		return x.Signer
+	}
+	return ""
+}
+
+func (x *Order) GetTaker() string {
+	if x != nil {
+		return x.Taker
+	}
+	return ""
+}
+
+func (x *Order) GetTokenId() string {
+	if x != nil {
+		return x.TokenId
+	}
+	return ""
+}
+
+func (x *Order) GetMakerAmount() string {
+	if x != nil {
+		return x.MakerAmount
+	}
+	return ""
+}
+
+func (x *Order) GetTakerAmount() string {
+	if x != nil {
+		return x.TakerAmount
+	}
+	return ""
+}
+
+func (x *Order) GetSide() string {
+	if x != nil {
+		return x.Side
+	}
+	return ""
+}
+
+func (x *Order) GetPrice() string {
+	if x != nil {
+		return x.Price
+	}
+	return ""
+}
+
+func (x *Order) GetSize() string {
+	if x != nil {
+		return x.Size
+	}
+	return ""
+}
+
+func (x *Order) GetRemaining() string {
+	if x != nil {
+		return x.Remaining
+	}
+	return ""
+}
+
+func (x *Order) GetExpiration() int64 {
+	if x != nil {
+		return x.Expiration
+	}
+	return 0
+}
+
+func (x *Order) GetSalt() string {
+	if x != nil {
+		return x.Salt
+	}
+	return ""
+}
+
+func (x *Order) GetNonce() string {
+	if x != nil {
+		return x.Nonce
+	}
+	return ""
+}
+
+func (x *Order) GetFeeRateBps() string {
+	if x != nil {
+		return x.FeeRateBps
+	}
+	return ""
+}
+
+func (x *Order) GetSignature() string {
+	if x != nil {
+		return x.Signature
+	}
+	return ""
+}
+
+func (x *Order) GetSignatureType() int32 {
+	if x != nil {
+		return x.SignatureType
+	}
+	return 0
+}
+
+func (x *Order) GetFunder() string {
+	if x != nil {
+		return x.Funder
+	}
+	return ""
+}
+
+func (x *Order) GetOrderType() string {
+	if x != nil {
+		return x.OrderType
+	}
+	return ""
+}
+
+func (x *Order) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
+// SubmitMatchRequest 提交匹配请求
+type SubmitMatchRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MakerOrder    *Order                 `protobuf:"bytes,1,opt,name=maker_order,json=makerOrder,proto3" json:"maker_order,omitempty"` // Maker 订单
+	TakerOrder    *Order                 `protobuf:"bytes,2,opt,name=taker_order,json=takerOrder,proto3" json:"taker_order,omitempty"` // Taker 订单
+	Price         string                 `protobuf:"bytes,3,opt,name=price,proto3" json:"price,omitempty"`                             // 匹配价格（BigInt as string）
+	Size          string                 `protobuf:"bytes,4,opt,name=size,proto3" json:"size,omitempty"`                               // 匹配数量（BigInt as string）
+	TokenId       string                 `protobuf:"bytes,5,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`          // Token ID
+	Timestamp     int64                  `protobuf:"varint,6,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                    // 匹配时间戳
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitMatchRequest) Reset() {
+	*x = SubmitMatchRequest{}
+	mi := &file_relayer_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitMatchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitMatchRequest) ProtoMessage() {}
+
+func (x *SubmitMatchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_relayer_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitMatchRequest.ProtoReflect.Descriptor instead.
+func (*SubmitMatchRequest) Descriptor() ([]byte, []int) {
+	return file_relayer_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SubmitMatchRequest) GetMakerOrder() *Order {
+	if x != nil {
+		return x.MakerOrder
+	}
+	return nil
+}
+
+func (x *SubmitMatchRequest) GetTakerOrder() *Order {
+	if x != nil {
+		return x.TakerOrder
+	}
+	return nil
+}
+
+func (x *SubmitMatchRequest) GetPrice() string {
+	if x != nil {
+		return x.Price
+	}
+	return ""
+}
+
+func (x *SubmitMatchRequest) GetSize() string {
+	if x != nil {
+		return x.Size
+	}
+	return ""
+}
+
+func (x *SubmitMatchRequest) GetTokenId() string {
+	if x != nil {
+		return x.TokenId
+	}
+	return ""
+}
+
+func (x *SubmitMatchRequest) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+// SubmitMatchReply 提交匹配响应
+type SubmitMatchReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TaskId        string                 `protobuf:"bytes,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"` // 任务 ID
+	Success       bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitMatchReply) Reset() {
+	*x = SubmitMatchReply{}
+	mi := &file_relayer_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitMatchReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitMatchReply) ProtoMessage() {}
+
+func (x *SubmitMatchReply) ProtoReflect() protoreflect.Message {
+	mi := &file_relayer_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitMatchReply.ProtoReflect.Descriptor instead.
+func (*SubmitMatchReply) Descriptor() ([]byte, []int) {
+	return file_relayer_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *SubmitMatchReply) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+func (x *SubmitMatchReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SubmitMatchReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// GetTransactionHashByOrderIDRequest 根据订单 ID 获取交易哈希请求
+type GetTransactionHashByOrderIDRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"` // 订单 ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTransactionHashByOrderIDRequest) Reset() {
+	*x = GetTransactionHashByOrderIDRequest{}
+	mi := &file_relayer_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTransactionHashByOrderIDRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTransactionHashByOrderIDRequest) ProtoMessage() {}
+
+func (x *GetTransactionHashByOrderIDRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_relayer_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTransactionHashByOrderIDRequest.ProtoReflect.Descriptor instead.
+func (*GetTransactionHashByOrderIDRequest) Descriptor() ([]byte, []int) {
+	return file_relayer_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetTransactionHashByOrderIDRequest) GetOrderId() string {
+	if x != nil {
+		return x.OrderId
+	}
+	return ""
+}
+
+// GetTransactionHashByOrderIDReply 根据订单 ID 获取交易哈希响应
+type GetTransactionHashByOrderIDReply struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	TransactionHash string                 `protobuf:"bytes,1,opt,name=transaction_hash,json=transactionHash,proto3" json:"transaction_hash,omitempty"` // 交易哈希
+	Success         bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
+	Message         string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetTransactionHashByOrderIDReply) Reset() {
+	*x = GetTransactionHashByOrderIDReply{}
+	mi := &file_relayer_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTransactionHashByOrderIDReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTransactionHashByOrderIDReply) ProtoMessage() {}
+
+func (x *GetTransactionHashByOrderIDReply) ProtoReflect() protoreflect.Message {
+	mi := &file_relayer_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTransactionHashByOrderIDReply.ProtoReflect.Descriptor instead.
+func (*GetTransactionHashByOrderIDReply) Descriptor() ([]byte, []int) {
+	return file_relayer_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetTransactionHashByOrderIDReply) GetTransactionHash() string {
+	if x != nil {
+		return x.TransactionHash
+	}
+	return ""
+}
+
+func (x *GetTransactionHashByOrderIDReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetTransactionHashByOrderIDReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_relayer_proto protoreflect.FileDescriptor
 
 const file_relayer_proto_rawDesc = "" +
@@ -1188,7 +1637,52 @@ const file_relayer_proto_rawDesc = "" +
 	"\x17GetOperatorBalanceReply\x12)\n" +
 	"\x10operator_address\x18\x01 \x01(\tR\x0foperatorAddress\x12\x18\n" +
 	"\abalance\x18\x02 \x01(\tR\abalance\x12#\n" +
-	"\rbalance_matic\x18\x03 \x01(\tR\fbalanceMatic*\xa8\x01\n" +
+	"\rbalance_matic\x18\x03 \x01(\tR\fbalanceMatic\"\x96\x04\n" +
+	"\x05Order\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05maker\x18\x02 \x01(\tR\x05maker\x12\x16\n" +
+	"\x06signer\x18\x03 \x01(\tR\x06signer\x12\x14\n" +
+	"\x05taker\x18\x04 \x01(\tR\x05taker\x12\x19\n" +
+	"\btoken_id\x18\x05 \x01(\tR\atokenId\x12!\n" +
+	"\fmaker_amount\x18\x06 \x01(\tR\vmakerAmount\x12!\n" +
+	"\ftaker_amount\x18\a \x01(\tR\vtakerAmount\x12\x12\n" +
+	"\x04side\x18\b \x01(\tR\x04side\x12\x14\n" +
+	"\x05price\x18\t \x01(\tR\x05price\x12\x12\n" +
+	"\x04size\x18\n" +
+	" \x01(\tR\x04size\x12\x1c\n" +
+	"\tremaining\x18\v \x01(\tR\tremaining\x12\x1e\n" +
+	"\n" +
+	"expiration\x18\f \x01(\x03R\n" +
+	"expiration\x12\x12\n" +
+	"\x04salt\x18\r \x01(\tR\x04salt\x12\x14\n" +
+	"\x05nonce\x18\x0e \x01(\tR\x05nonce\x12 \n" +
+	"\ffee_rate_bps\x18\x0f \x01(\tR\n" +
+	"feeRateBps\x12\x1c\n" +
+	"\tsignature\x18\x10 \x01(\tR\tsignature\x12%\n" +
+	"\x0esignature_type\x18\x11 \x01(\x05R\rsignatureType\x12\x16\n" +
+	"\x06funder\x18\x12 \x01(\tR\x06funder\x12\x1d\n" +
+	"\n" +
+	"order_type\x18\x13 \x01(\tR\torderType\x12\x14\n" +
+	"\x05owner\x18\x14 \x01(\tR\x05owner\"\xdf\x01\n" +
+	"\x12SubmitMatchRequest\x122\n" +
+	"\vmaker_order\x18\x01 \x01(\v2\x11.relayer.v1.OrderR\n" +
+	"makerOrder\x122\n" +
+	"\vtaker_order\x18\x02 \x01(\v2\x11.relayer.v1.OrderR\n" +
+	"takerOrder\x12\x14\n" +
+	"\x05price\x18\x03 \x01(\tR\x05price\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\tR\x04size\x12\x19\n" +
+	"\btoken_id\x18\x05 \x01(\tR\atokenId\x12\x1c\n" +
+	"\ttimestamp\x18\x06 \x01(\x03R\ttimestamp\"_\n" +
+	"\x10SubmitMatchReply\x12\x17\n" +
+	"\atask_id\x18\x01 \x01(\tR\x06taskId\x12\x18\n" +
+	"\asuccess\x18\x02 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\"?\n" +
+	"\"GetTransactionHashByOrderIDRequest\x12\x19\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\"\x81\x01\n" +
+	" GetTransactionHashByOrderIDReply\x12)\n" +
+	"\x10transaction_hash\x18\x01 \x01(\tR\x0ftransactionHash\x12\x18\n" +
+	"\asuccess\x18\x02 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage*\xa8\x01\n" +
 	"\x0fTransactionType\x12 \n" +
 	"\x1cTRANSACTION_TYPE_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11WALLET_DEPLOYMENT\x10\x01\x12\x12\n" +
@@ -1205,7 +1699,7 @@ const file_relayer_proto_rawDesc = "" +
 	"WalletType\x12\x1b\n" +
 	"\x17WALLET_TYPE_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04SAFE\x10\x01\x12\t\n" +
-	"\x05PROXY\x10\x022\xfc\x05\n" +
+	"\x05PROXY\x10\x022\x88\b\n" +
 	"\aRelayer\x12t\n" +
 	"\x11SubmitTransaction\x12$.relayer.v1.SubmitTransactionRequest\x1a\".relayer.v1.SubmitTransactionReply\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
 	"/v1/submit\x12\x89\x01\n" +
@@ -1213,7 +1707,9 @@ const file_relayer_proto_rawDesc = "" +
 	"\fDeployWallet\x12\x1f.relayer.v1.DeployWalletRequest\x1a\x1d.relayer.v1.DeployWalletReply\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/wallet/deploy\x12\x84\x01\n" +
 	"\x14GetTransactionStatus\x12'.relayer.v1.GetTransactionStatusRequest\x1a%.relayer.v1.GetTransactionStatusReply\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/status/{task_id}\x12z\n" +
 	"\x12GetBuilderFeeStats\x12%.relayer.v1.GetBuilderFeeStatsRequest\x1a#.relayer.v1.GetBuilderFeeStatsReply\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/builder/fees\x12~\n" +
-	"\x12GetOperatorBalance\x12%.relayer.v1.GetOperatorBalanceRequest\x1a#.relayer.v1.GetOperatorBalanceReply\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/operator/balanceB0Z.xinyuan_tech/relayer-service/api/relayer/v1;v1b\x06proto3"
+	"\x12GetOperatorBalance\x12%.relayer.v1.GetOperatorBalanceRequest\x1a#.relayer.v1.GetOperatorBalanceReply\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/operator/balance\x12a\n" +
+	"\vSubmitMatch\x12\x1e.relayer.v1.SubmitMatchRequest\x1a\x1c.relayer.v1.SubmitMatchReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/match\x12\xa6\x01\n" +
+	"\x1bGetTransactionHashByOrderID\x12..relayer.v1.GetTransactionHashByOrderIDRequest\x1a,.relayer.v1.GetTransactionHashByOrderIDReply\")\x82\xd3\xe4\x93\x02#\x12!/v1/orders/{order_id}/transactionB0Z.xinyuan_tech/relayer-service/api/relayer/v1;v1b\x06proto3"
 
 var (
 	file_relayer_proto_rawDescOnce sync.Once
@@ -1228,26 +1724,31 @@ func file_relayer_proto_rawDescGZIP() []byte {
 }
 
 var file_relayer_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_relayer_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_relayer_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_relayer_proto_goTypes = []any{
-	(TransactionType)(0),                  // 0: relayer.v1.TransactionType
-	(WalletType)(0),                       // 1: relayer.v1.WalletType
-	(*SubmitTransactionRequest)(nil),      // 2: relayer.v1.SubmitTransactionRequest
-	(*SubmitTransactionReply)(nil),        // 3: relayer.v1.SubmitTransactionReply
-	(*SubmitBatchTransactionRequest)(nil), // 4: relayer.v1.SubmitBatchTransactionRequest
-	(*TransactionRequest)(nil),            // 5: relayer.v1.TransactionRequest
-	(*SubmitBatchTransactionReply)(nil),   // 6: relayer.v1.SubmitBatchTransactionReply
-	(*DeployWalletRequest)(nil),           // 7: relayer.v1.DeployWalletRequest
-	(*DeployWalletReply)(nil),             // 8: relayer.v1.DeployWalletReply
-	(*GetTransactionStatusRequest)(nil),   // 9: relayer.v1.GetTransactionStatusRequest
-	(*TransactionStatus)(nil),             // 10: relayer.v1.TransactionStatus
-	(*GetTransactionStatusReply)(nil),     // 11: relayer.v1.GetTransactionStatusReply
-	(*GetBuilderFeeStatsRequest)(nil),     // 12: relayer.v1.GetBuilderFeeStatsRequest
-	(*FeeStatsByType)(nil),                // 13: relayer.v1.FeeStatsByType
-	(*GetBuilderFeeStatsReply)(nil),       // 14: relayer.v1.GetBuilderFeeStatsReply
-	(*GetOperatorBalanceRequest)(nil),     // 15: relayer.v1.GetOperatorBalanceRequest
-	(*GetOperatorBalanceReply)(nil),       // 16: relayer.v1.GetOperatorBalanceReply
-	nil,                                   // 17: relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry
+	(TransactionType)(0),                       // 0: relayer.v1.TransactionType
+	(WalletType)(0),                            // 1: relayer.v1.WalletType
+	(*SubmitTransactionRequest)(nil),           // 2: relayer.v1.SubmitTransactionRequest
+	(*SubmitTransactionReply)(nil),             // 3: relayer.v1.SubmitTransactionReply
+	(*SubmitBatchTransactionRequest)(nil),      // 4: relayer.v1.SubmitBatchTransactionRequest
+	(*TransactionRequest)(nil),                 // 5: relayer.v1.TransactionRequest
+	(*SubmitBatchTransactionReply)(nil),        // 6: relayer.v1.SubmitBatchTransactionReply
+	(*DeployWalletRequest)(nil),                // 7: relayer.v1.DeployWalletRequest
+	(*DeployWalletReply)(nil),                  // 8: relayer.v1.DeployWalletReply
+	(*GetTransactionStatusRequest)(nil),        // 9: relayer.v1.GetTransactionStatusRequest
+	(*TransactionStatus)(nil),                  // 10: relayer.v1.TransactionStatus
+	(*GetTransactionStatusReply)(nil),          // 11: relayer.v1.GetTransactionStatusReply
+	(*GetBuilderFeeStatsRequest)(nil),          // 12: relayer.v1.GetBuilderFeeStatsRequest
+	(*FeeStatsByType)(nil),                     // 13: relayer.v1.FeeStatsByType
+	(*GetBuilderFeeStatsReply)(nil),            // 14: relayer.v1.GetBuilderFeeStatsReply
+	(*GetOperatorBalanceRequest)(nil),          // 15: relayer.v1.GetOperatorBalanceRequest
+	(*GetOperatorBalanceReply)(nil),            // 16: relayer.v1.GetOperatorBalanceReply
+	(*Order)(nil),                              // 17: relayer.v1.Order
+	(*SubmitMatchRequest)(nil),                 // 18: relayer.v1.SubmitMatchRequest
+	(*SubmitMatchReply)(nil),                   // 19: relayer.v1.SubmitMatchReply
+	(*GetTransactionHashByOrderIDRequest)(nil), // 20: relayer.v1.GetTransactionHashByOrderIDRequest
+	(*GetTransactionHashByOrderIDReply)(nil),   // 21: relayer.v1.GetTransactionHashByOrderIDReply
+	nil,                                        // 22: relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry
 }
 var file_relayer_proto_depIdxs = []int32{
 	0,  // 0: relayer.v1.SubmitTransactionRequest.transaction_type:type_name -> relayer.v1.TransactionType
@@ -1255,25 +1756,31 @@ var file_relayer_proto_depIdxs = []int32{
 	0,  // 2: relayer.v1.TransactionRequest.transaction_type:type_name -> relayer.v1.TransactionType
 	1,  // 3: relayer.v1.DeployWalletRequest.wallet_type:type_name -> relayer.v1.WalletType
 	10, // 4: relayer.v1.GetTransactionStatusReply.status:type_name -> relayer.v1.TransactionStatus
-	17, // 5: relayer.v1.GetBuilderFeeStatsReply.by_type:type_name -> relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry
-	13, // 6: relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry.value:type_name -> relayer.v1.FeeStatsByType
-	2,  // 7: relayer.v1.Relayer.SubmitTransaction:input_type -> relayer.v1.SubmitTransactionRequest
-	4,  // 8: relayer.v1.Relayer.SubmitBatchTransaction:input_type -> relayer.v1.SubmitBatchTransactionRequest
-	7,  // 9: relayer.v1.Relayer.DeployWallet:input_type -> relayer.v1.DeployWalletRequest
-	9,  // 10: relayer.v1.Relayer.GetTransactionStatus:input_type -> relayer.v1.GetTransactionStatusRequest
-	12, // 11: relayer.v1.Relayer.GetBuilderFeeStats:input_type -> relayer.v1.GetBuilderFeeStatsRequest
-	15, // 12: relayer.v1.Relayer.GetOperatorBalance:input_type -> relayer.v1.GetOperatorBalanceRequest
-	3,  // 13: relayer.v1.Relayer.SubmitTransaction:output_type -> relayer.v1.SubmitTransactionReply
-	6,  // 14: relayer.v1.Relayer.SubmitBatchTransaction:output_type -> relayer.v1.SubmitBatchTransactionReply
-	8,  // 15: relayer.v1.Relayer.DeployWallet:output_type -> relayer.v1.DeployWalletReply
-	11, // 16: relayer.v1.Relayer.GetTransactionStatus:output_type -> relayer.v1.GetTransactionStatusReply
-	14, // 17: relayer.v1.Relayer.GetBuilderFeeStats:output_type -> relayer.v1.GetBuilderFeeStatsReply
-	16, // 18: relayer.v1.Relayer.GetOperatorBalance:output_type -> relayer.v1.GetOperatorBalanceReply
-	13, // [13:19] is the sub-list for method output_type
-	7,  // [7:13] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	22, // 5: relayer.v1.GetBuilderFeeStatsReply.by_type:type_name -> relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry
+	17, // 6: relayer.v1.SubmitMatchRequest.maker_order:type_name -> relayer.v1.Order
+	17, // 7: relayer.v1.SubmitMatchRequest.taker_order:type_name -> relayer.v1.Order
+	13, // 8: relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry.value:type_name -> relayer.v1.FeeStatsByType
+	2,  // 9: relayer.v1.Relayer.SubmitTransaction:input_type -> relayer.v1.SubmitTransactionRequest
+	4,  // 10: relayer.v1.Relayer.SubmitBatchTransaction:input_type -> relayer.v1.SubmitBatchTransactionRequest
+	7,  // 11: relayer.v1.Relayer.DeployWallet:input_type -> relayer.v1.DeployWalletRequest
+	9,  // 12: relayer.v1.Relayer.GetTransactionStatus:input_type -> relayer.v1.GetTransactionStatusRequest
+	12, // 13: relayer.v1.Relayer.GetBuilderFeeStats:input_type -> relayer.v1.GetBuilderFeeStatsRequest
+	15, // 14: relayer.v1.Relayer.GetOperatorBalance:input_type -> relayer.v1.GetOperatorBalanceRequest
+	18, // 15: relayer.v1.Relayer.SubmitMatch:input_type -> relayer.v1.SubmitMatchRequest
+	20, // 16: relayer.v1.Relayer.GetTransactionHashByOrderID:input_type -> relayer.v1.GetTransactionHashByOrderIDRequest
+	3,  // 17: relayer.v1.Relayer.SubmitTransaction:output_type -> relayer.v1.SubmitTransactionReply
+	6,  // 18: relayer.v1.Relayer.SubmitBatchTransaction:output_type -> relayer.v1.SubmitBatchTransactionReply
+	8,  // 19: relayer.v1.Relayer.DeployWallet:output_type -> relayer.v1.DeployWalletReply
+	11, // 20: relayer.v1.Relayer.GetTransactionStatus:output_type -> relayer.v1.GetTransactionStatusReply
+	14, // 21: relayer.v1.Relayer.GetBuilderFeeStats:output_type -> relayer.v1.GetBuilderFeeStatsReply
+	16, // 22: relayer.v1.Relayer.GetOperatorBalance:output_type -> relayer.v1.GetOperatorBalanceReply
+	19, // 23: relayer.v1.Relayer.SubmitMatch:output_type -> relayer.v1.SubmitMatchReply
+	21, // 24: relayer.v1.Relayer.GetTransactionHashByOrderID:output_type -> relayer.v1.GetTransactionHashByOrderIDReply
+	17, // [17:25] is the sub-list for method output_type
+	9,  // [9:17] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_relayer_proto_init() }
@@ -1287,7 +1794,7 @@ func file_relayer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_relayer_proto_rawDesc), len(file_relayer_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   16,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

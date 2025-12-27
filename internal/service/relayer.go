@@ -248,4 +248,97 @@ func (s *RelayerService) GetOperatorBalance(ctx context.Context, req *v1.GetOper
 	}, nil
 }
 
+// SubmitMatch 提交订单匹配结果
+func (s *RelayerService) SubmitMatch(ctx context.Context, req *v1.SubmitMatchRequest) (*v1.SubmitMatchReply, error) {
+	// 转换 protobuf 订单为业务订单
+	makerOrder := &biz.MatchOrder{
+		ID:            req.MakerOrder.Id,
+		Maker:         req.MakerOrder.Maker,
+		Signer:        req.MakerOrder.Signer,
+		Taker:         req.MakerOrder.Taker,
+		TokenID:       req.MakerOrder.TokenId,
+		MakerAmount:   req.MakerOrder.MakerAmount,
+		TakerAmount:   req.MakerOrder.TakerAmount,
+		Side:          req.MakerOrder.Side,
+		Price:         req.MakerOrder.Price,
+		Size:          req.MakerOrder.Size,
+		Remaining:     req.MakerOrder.Remaining,
+		Expiration:    req.MakerOrder.Expiration,
+		Salt:          req.MakerOrder.Salt,
+		Nonce:         req.MakerOrder.Nonce,
+		FeeRateBps:    req.MakerOrder.FeeRateBps,
+		Signature:     req.MakerOrder.Signature,
+		SignatureType: req.MakerOrder.SignatureType,
+		Funder:        req.MakerOrder.Funder,
+		OrderType:     req.MakerOrder.OrderType,
+		Owner:         req.MakerOrder.Owner,
+	}
+
+	takerOrder := &biz.MatchOrder{
+		ID:            req.TakerOrder.Id,
+		Maker:         req.TakerOrder.Maker,
+		Signer:        req.TakerOrder.Signer,
+		Taker:         req.TakerOrder.Taker,
+		TokenID:       req.TakerOrder.TokenId,
+		MakerAmount:   req.TakerOrder.MakerAmount,
+		TakerAmount:   req.TakerOrder.TakerAmount,
+		Side:          req.TakerOrder.Side,
+		Price:         req.TakerOrder.Price,
+		Size:          req.TakerOrder.Size,
+		Remaining:     req.TakerOrder.Remaining,
+		Expiration:    req.TakerOrder.Expiration,
+		Salt:          req.TakerOrder.Salt,
+		Nonce:         req.TakerOrder.Nonce,
+		FeeRateBps:    req.TakerOrder.FeeRateBps,
+		Signature:     req.TakerOrder.Signature,
+		SignatureType: req.TakerOrder.SignatureType,
+		Funder:        req.TakerOrder.Funder,
+		OrderType:     req.TakerOrder.OrderType,
+		Owner:         req.TakerOrder.Owner,
+	}
+
+	bizReq := &biz.SubmitMatchRequest{
+		MakerOrder: makerOrder,
+		TakerOrder: takerOrder,
+		Price:      req.Price,
+		Size:       req.Size,
+		TokenID:    req.TokenId,
+		Timestamp:  req.Timestamp,
+	}
+
+	reply, err := s.bizService.SubmitMatch(ctx, bizReq)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.SubmitMatchReply{
+		TaskId:  reply.TaskID,
+		Success: reply.Success,
+		Message: reply.Message,
+	}, nil
+}
+
+// GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+func (s *RelayerService) GetTransactionHashByOrderID(ctx context.Context, req *v1.GetTransactionHashByOrderIDRequest) (*v1.GetTransactionHashByOrderIDReply, error) {
+	txHash, err := s.bizService.GetTransactionHashByOrderID(ctx, req.OrderId)
+	if err != nil {
+		return &v1.GetTransactionHashByOrderIDReply{
+			Success: false,
+			Message: fmt.Sprintf("failed to get transaction hash: %v", err),
+		}, nil
+	}
+
+	if txHash == "" {
+		return &v1.GetTransactionHashByOrderIDReply{
+			Success: false,
+			Message: "transaction not found for this order ID",
+		}, nil
+	}
+
+	return &v1.GetTransactionHashByOrderIDReply{
+		TransactionHash: txHash,
+		Success:         true,
+		Message:         "transaction hash retrieved successfully",
+	}, nil
+}
 

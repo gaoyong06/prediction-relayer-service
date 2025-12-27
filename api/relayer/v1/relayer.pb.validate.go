@@ -1768,3 +1768,633 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetOperatorBalanceReplyValidationError{}
+
+// Validate checks the field values on Order with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Order) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Order with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in OrderMultiError, or nil if none found.
+func (m *Order) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Order) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Maker
+
+	// no validation rules for Signer
+
+	// no validation rules for Taker
+
+	// no validation rules for TokenId
+
+	// no validation rules for MakerAmount
+
+	// no validation rules for TakerAmount
+
+	// no validation rules for Side
+
+	// no validation rules for Price
+
+	// no validation rules for Size
+
+	// no validation rules for Remaining
+
+	// no validation rules for Expiration
+
+	// no validation rules for Salt
+
+	// no validation rules for Nonce
+
+	// no validation rules for FeeRateBps
+
+	// no validation rules for Signature
+
+	// no validation rules for SignatureType
+
+	// no validation rules for Funder
+
+	// no validation rules for OrderType
+
+	// no validation rules for Owner
+
+	if len(errors) > 0 {
+		return OrderMultiError(errors)
+	}
+
+	return nil
+}
+
+// OrderMultiError is an error wrapping multiple validation errors returned by
+// Order.ValidateAll() if the designated constraints aren't met.
+type OrderMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OrderMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OrderMultiError) AllErrors() []error { return m }
+
+// OrderValidationError is the validation error returned by Order.Validate if
+// the designated constraints aren't met.
+type OrderValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OrderValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OrderValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OrderValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OrderValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OrderValidationError) ErrorName() string { return "OrderValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OrderValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOrder.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OrderValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OrderValidationError{}
+
+// Validate checks the field values on SubmitMatchRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SubmitMatchRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SubmitMatchRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SubmitMatchRequestMultiError, or nil if none found.
+func (m *SubmitMatchRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SubmitMatchRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetMakerOrder()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, SubmitMatchRequestValidationError{
+					field:  "MakerOrder",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, SubmitMatchRequestValidationError{
+					field:  "MakerOrder",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetMakerOrder()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SubmitMatchRequestValidationError{
+				field:  "MakerOrder",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetTakerOrder()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, SubmitMatchRequestValidationError{
+					field:  "TakerOrder",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, SubmitMatchRequestValidationError{
+					field:  "TakerOrder",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTakerOrder()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SubmitMatchRequestValidationError{
+				field:  "TakerOrder",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Price
+
+	// no validation rules for Size
+
+	// no validation rules for TokenId
+
+	// no validation rules for Timestamp
+
+	if len(errors) > 0 {
+		return SubmitMatchRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// SubmitMatchRequestMultiError is an error wrapping multiple validation errors
+// returned by SubmitMatchRequest.ValidateAll() if the designated constraints
+// aren't met.
+type SubmitMatchRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SubmitMatchRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SubmitMatchRequestMultiError) AllErrors() []error { return m }
+
+// SubmitMatchRequestValidationError is the validation error returned by
+// SubmitMatchRequest.Validate if the designated constraints aren't met.
+type SubmitMatchRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SubmitMatchRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SubmitMatchRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SubmitMatchRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SubmitMatchRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SubmitMatchRequestValidationError) ErrorName() string {
+	return "SubmitMatchRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SubmitMatchRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSubmitMatchRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SubmitMatchRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SubmitMatchRequestValidationError{}
+
+// Validate checks the field values on SubmitMatchReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SubmitMatchReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SubmitMatchReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SubmitMatchReplyMultiError, or nil if none found.
+func (m *SubmitMatchReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SubmitMatchReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for TaskId
+
+	// no validation rules for Success
+
+	// no validation rules for Message
+
+	if len(errors) > 0 {
+		return SubmitMatchReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// SubmitMatchReplyMultiError is an error wrapping multiple validation errors
+// returned by SubmitMatchReply.ValidateAll() if the designated constraints
+// aren't met.
+type SubmitMatchReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SubmitMatchReplyMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SubmitMatchReplyMultiError) AllErrors() []error { return m }
+
+// SubmitMatchReplyValidationError is the validation error returned by
+// SubmitMatchReply.Validate if the designated constraints aren't met.
+type SubmitMatchReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SubmitMatchReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SubmitMatchReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SubmitMatchReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SubmitMatchReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SubmitMatchReplyValidationError) ErrorName() string { return "SubmitMatchReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SubmitMatchReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSubmitMatchReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SubmitMatchReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SubmitMatchReplyValidationError{}
+
+// Validate checks the field values on GetTransactionHashByOrderIDRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *GetTransactionHashByOrderIDRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTransactionHashByOrderIDRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// GetTransactionHashByOrderIDRequestMultiError, or nil if none found.
+func (m *GetTransactionHashByOrderIDRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTransactionHashByOrderIDRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for OrderId
+
+	if len(errors) > 0 {
+		return GetTransactionHashByOrderIDRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTransactionHashByOrderIDRequestMultiError is an error wrapping multiple
+// validation errors returned by
+// GetTransactionHashByOrderIDRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GetTransactionHashByOrderIDRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTransactionHashByOrderIDRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTransactionHashByOrderIDRequestMultiError) AllErrors() []error { return m }
+
+// GetTransactionHashByOrderIDRequestValidationError is the validation error
+// returned by GetTransactionHashByOrderIDRequest.Validate if the designated
+// constraints aren't met.
+type GetTransactionHashByOrderIDRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTransactionHashByOrderIDRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTransactionHashByOrderIDRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTransactionHashByOrderIDRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTransactionHashByOrderIDRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTransactionHashByOrderIDRequestValidationError) ErrorName() string {
+	return "GetTransactionHashByOrderIDRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetTransactionHashByOrderIDRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTransactionHashByOrderIDRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTransactionHashByOrderIDRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTransactionHashByOrderIDRequestValidationError{}
+
+// Validate checks the field values on GetTransactionHashByOrderIDReply with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *GetTransactionHashByOrderIDReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTransactionHashByOrderIDReply with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// GetTransactionHashByOrderIDReplyMultiError, or nil if none found.
+func (m *GetTransactionHashByOrderIDReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTransactionHashByOrderIDReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for TransactionHash
+
+	// no validation rules for Success
+
+	// no validation rules for Message
+
+	if len(errors) > 0 {
+		return GetTransactionHashByOrderIDReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTransactionHashByOrderIDReplyMultiError is an error wrapping multiple
+// validation errors returned by
+// GetTransactionHashByOrderIDReply.ValidateAll() if the designated
+// constraints aren't met.
+type GetTransactionHashByOrderIDReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTransactionHashByOrderIDReplyMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTransactionHashByOrderIDReplyMultiError) AllErrors() []error { return m }
+
+// GetTransactionHashByOrderIDReplyValidationError is the validation error
+// returned by GetTransactionHashByOrderIDReply.Validate if the designated
+// constraints aren't met.
+type GetTransactionHashByOrderIDReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTransactionHashByOrderIDReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTransactionHashByOrderIDReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTransactionHashByOrderIDReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTransactionHashByOrderIDReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTransactionHashByOrderIDReplyValidationError) ErrorName() string {
+	return "GetTransactionHashByOrderIDReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetTransactionHashByOrderIDReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTransactionHashByOrderIDReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTransactionHashByOrderIDReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTransactionHashByOrderIDReplyValidationError{}

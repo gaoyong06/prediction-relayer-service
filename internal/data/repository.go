@@ -2,7 +2,9 @@ package data
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -18,6 +20,7 @@ type TransactionRepo interface {
 	UpdateGasUsed(ctx context.Context, taskID string, gasUsed int64, blockNumber int64) error
 	GetPendingTransactions(ctx context.Context, limit int) ([]*Transaction, error)
 	GetByBuilderAPIKey(ctx context.Context, apiKey string, startTime, endTime time.Time) ([]*Transaction, error)
+	GetByOrderID(ctx context.Context, orderID string) (*Transaction, error) // 根据订单 ID 查询交易（通过 Signature 字段中的 JSON 数据）
 }
 
 // BuilderRepo Builder 仓库接口
@@ -136,6 +139,29 @@ func (r *transactionRepo) GetByBuilderAPIKey(ctx context.Context, apiKey string,
 		Where("builder_api_key = ? AND created_at >= ? AND created_at <= ?", apiKey, startTime, endTime).
 		Find(&txs).Error
 	return txs, err
+}
+
+// GetByOrderID 根据订单 ID 查询交易
+// 注意：订单 ID 存储在 Signature 字段中（JSON 格式：{"maker_order_id": "...", "taker_order_id": "..."}）
+// 或者存储在 data 字段的元数据中
+func (r *transactionRepo) GetByOrderID(ctx context.Context, orderID string) (*Transaction, error) {
+	// 查询 Signature 字段包含订单 ID 的交易
+	// 使用 JSON_CONTAINS 或 LIKE 查询（取决于数据库支持）
+	var tx Transaction
+	err := r.data.db.WithContext(ctx).
+		Where("transaction_type = ? AND (signature LIKE ? OR signature LIKE ?)", 
+			"CLOB_ORDER", 
+			fmt.Sprintf("%%\"maker_order_id\":\"%s\"%%", orderID),
+			fmt.Sprintf("%%\"taker_order_id\":\"%s\"%%", orderID)).
+		First(&tx).Error
+	
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &tx, nil
 }
 
 // builderRepo Builder 仓库实现

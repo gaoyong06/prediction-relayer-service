@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -26,6 +27,12 @@ type RelayerService interface {
 
 	// GetBuilderFeeStats 获取 Builder 费用统计
 	GetBuilderFeeStats(ctx context.Context, apiKey string, startTime, endTime time.Time) (*BuilderFeeStats, error)
+
+	// SubmitMatch 提交订单匹配结果
+	SubmitMatch(ctx context.Context, req *SubmitMatchRequest) (*SubmitMatchReply, error)
+
+	// GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+	GetTransactionHashByOrderID(ctx context.Context, orderID string) (string, error)
 }
 
 // SubmitTransactionRequest 提交交易请求
@@ -250,4 +257,111 @@ func (s *relayerService) GetBuilderFeeStats(ctx context.Context, apiKey string, 
 	return result, nil
 }
 
+// SubmitMatchRequest 提交匹配请求
+type SubmitMatchRequest struct {
+	MakerOrder *MatchOrder
+	TakerOrder *MatchOrder
+	Price      string // 匹配价格（BigInt as string）
+	Size       string // 匹配数量（BigInt as string）
+	TokenID    string
+	Timestamp  int64
+}
+
+// MatchOrder 匹配订单信息
+type MatchOrder struct {
+	ID            string
+	Maker         string
+	Signer        string
+	Taker         string
+	TokenID       string
+	MakerAmount   string
+	TakerAmount   string
+	Side          string
+	Price         string
+	Size          string
+	Remaining     string
+	Expiration    int64
+	Salt          string
+	Nonce         string
+	FeeRateBps    string
+	Signature     string
+	SignatureType int32
+	Funder        string
+	OrderType     string
+	Owner         string
+}
+
+// SubmitMatchReply 提交匹配响应
+type SubmitMatchReply struct {
+	TaskID  string
+	Success bool
+	Message string
+}
+
+// SubmitMatch 提交订单匹配结果
+func (s *relayerService) SubmitMatch(ctx context.Context, req *SubmitMatchRequest) (*SubmitMatchReply, error) {
+	// 1. 构建交易数据（将订单信息编码到 data 字段）
+	// 注意：这里简化处理，实际应该调用 CLOB 合约的 matchOrders 函数
+	// 2. 创建 CLOB_ORDER 类型的交易
+	// 3. 将订单 ID 信息存储到 Signature 字段（JSON 格式）以便后续查询
+
+	// 将订单 ID 信息编码为 JSON 存储在 Signature 字段中
+	orderIDs := map[string]string{
+		"maker_order_id": req.MakerOrder.ID,
+		"taker_order_id": req.TakerOrder.ID,
+	}
+	orderIDsJSON, err := json.Marshal(orderIDs)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal order IDs: %w", err)
+	}
+
+	// 构建交易请求
+	// 注意：这里简化处理，实际应该：
+	// 1. 调用 CLOB 合约的 matchOrders 函数，编码交易数据
+	// 2. 使用正确的 to 地址（CLOB 合约地址）
+	// 3. 设置正确的 gas limit
+
+	// 简化实现：创建一个 CLOB_ORDER 类型的交易
+	// 实际应该从配置中获取 CLOB 合约地址
+	clobContractAddress := "" // TODO: 从配置获取 CLOB 合约地址
+
+	// 构建交易数据（这里简化，实际应该编码 matchOrders 函数调用）
+	txData := "" // TODO: 编码 matchOrders(makerOrder, takerOrder) 函数调用
+
+	// 创建交易请求
+	txReq := &SubmitTransactionRequest{
+		To:              clobContractAddress,
+		Data:            txData,
+		Signature:       string(orderIDsJSON), // 将订单 ID 存储在 Signature 字段中
+		Forwarder:       "",
+		GasLimit:        500000, // 默认 Gas Limit
+		TransactionType: "CLOB_ORDER",
+		Value:           "0x0",
+		AuthRequest:     nil, // CLOB 订单不需要 Builder 认证
+	}
+
+	// 提交交易
+	reply, err := s.SubmitTransaction(ctx, txReq)
+	if err != nil {
+		return nil, fmt.Errorf("failed to submit match transaction: %w", err)
+	}
+
+	return &SubmitMatchReply{
+		TaskID:  reply.TaskID,
+		Success: reply.Success,
+		Message: reply.Message,
+	}, nil
+}
+
+// GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+func (s *relayerService) GetTransactionHashByOrderID(ctx context.Context, orderID string) (string, error) {
+	tx, err := s.txRepo.GetByOrderID(ctx, orderID)
+	if err != nil {
+		return "", fmt.Errorf("failed to get transaction by order ID: %w", err)
+	}
+	if tx == nil {
+		return "", nil // 未找到交易，返回空字符串
+	}
+	return tx.TxHash, nil
+}
 

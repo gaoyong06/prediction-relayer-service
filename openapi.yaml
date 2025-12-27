@@ -38,6 +38,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /v1/match:
+        post:
+            tags:
+                - Relayer
+            description: SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+            operationId: Relayer_SubmitMatch
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SubmitMatchRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SubmitMatchReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /v1/operator/balance:
         get:
             tags:
@@ -56,6 +81,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetOperatorBalanceReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/orders/{orderId}/transaction:
+        get:
+            tags:
+                - Relayer
+            description: GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+            operationId: Relayer_GetTransactionHashByOrderID
+            parameters:
+                - name: orderId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetTransactionHashByOrderIDReply'
                 default:
                     description: Default error response
                     content:
@@ -221,6 +271,16 @@ components:
                 balanceMatic:
                     type: string
             description: GetOperatorBalanceReply 查询 Operator 余额响应
+        GetTransactionHashByOrderIDReply:
+            type: object
+            properties:
+                transactionHash:
+                    type: string
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: GetTransactionHashByOrderIDReply 根据订单 ID 获取交易哈希响应
         GetTransactionStatusReply:
             type: object
             properties:
@@ -235,6 +295,51 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        Order:
+            type: object
+            properties:
+                id:
+                    type: string
+                maker:
+                    type: string
+                signer:
+                    type: string
+                taker:
+                    type: string
+                tokenId:
+                    type: string
+                makerAmount:
+                    type: string
+                takerAmount:
+                    type: string
+                side:
+                    type: string
+                price:
+                    type: string
+                size:
+                    type: string
+                remaining:
+                    type: string
+                expiration:
+                    type: string
+                salt:
+                    type: string
+                nonce:
+                    type: string
+                feeRateBps:
+                    type: string
+                signature:
+                    type: string
+                signatureType:
+                    type: integer
+                    format: int32
+                funder:
+                    type: string
+                orderType:
+                    type: string
+                owner:
+                    type: string
+            description: Order 订单信息（用于匹配）
         Status:
             type: object
             properties:
@@ -273,6 +378,32 @@ components:
                 builderApiKey:
                     type: string
             description: SubmitBatchTransactionRequest 批量提交交易请求
+        SubmitMatchReply:
+            type: object
+            properties:
+                taskId:
+                    type: string
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: SubmitMatchReply 提交匹配响应
+        SubmitMatchRequest:
+            type: object
+            properties:
+                makerOrder:
+                    $ref: '#/components/schemas/Order'
+                takerOrder:
+                    $ref: '#/components/schemas/Order'
+                price:
+                    type: string
+                size:
+                    type: string
+                tokenId:
+                    type: string
+                timestamp:
+                    type: string
+            description: SubmitMatchRequest 提交匹配请求
         SubmitTransactionReply:
             type: object
             properties:

@@ -19,12 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Relayer_SubmitTransaction_FullMethodName      = "/relayer.v1.Relayer/SubmitTransaction"
-	Relayer_SubmitBatchTransaction_FullMethodName = "/relayer.v1.Relayer/SubmitBatchTransaction"
-	Relayer_DeployWallet_FullMethodName           = "/relayer.v1.Relayer/DeployWallet"
-	Relayer_GetTransactionStatus_FullMethodName   = "/relayer.v1.Relayer/GetTransactionStatus"
-	Relayer_GetBuilderFeeStats_FullMethodName     = "/relayer.v1.Relayer/GetBuilderFeeStats"
-	Relayer_GetOperatorBalance_FullMethodName     = "/relayer.v1.Relayer/GetOperatorBalance"
+	Relayer_SubmitTransaction_FullMethodName           = "/relayer.v1.Relayer/SubmitTransaction"
+	Relayer_SubmitBatchTransaction_FullMethodName      = "/relayer.v1.Relayer/SubmitBatchTransaction"
+	Relayer_DeployWallet_FullMethodName                = "/relayer.v1.Relayer/DeployWallet"
+	Relayer_GetTransactionStatus_FullMethodName        = "/relayer.v1.Relayer/GetTransactionStatus"
+	Relayer_GetBuilderFeeStats_FullMethodName          = "/relayer.v1.Relayer/GetBuilderFeeStats"
+	Relayer_GetOperatorBalance_FullMethodName          = "/relayer.v1.Relayer/GetOperatorBalance"
+	Relayer_SubmitMatch_FullMethodName                 = "/relayer.v1.Relayer/SubmitMatch"
+	Relayer_GetTransactionHashByOrderID_FullMethodName = "/relayer.v1.Relayer/GetTransactionHashByOrderID"
 )
 
 // RelayerClient is the client API for Relayer service.
@@ -43,6 +45,10 @@ type RelayerClient interface {
 	GetBuilderFeeStats(ctx context.Context, in *GetBuilderFeeStatsRequest, opts ...grpc.CallOption) (*GetBuilderFeeStatsReply, error)
 	// GetOperatorBalance 查询 Operator 余额
 	GetOperatorBalance(ctx context.Context, in *GetOperatorBalanceRequest, opts ...grpc.CallOption) (*GetOperatorBalanceReply, error)
+	// SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+	SubmitMatch(ctx context.Context, in *SubmitMatchRequest, opts ...grpc.CallOption) (*SubmitMatchReply, error)
+	// GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+	GetTransactionHashByOrderID(ctx context.Context, in *GetTransactionHashByOrderIDRequest, opts ...grpc.CallOption) (*GetTransactionHashByOrderIDReply, error)
 }
 
 type relayerClient struct {
@@ -113,6 +119,26 @@ func (c *relayerClient) GetOperatorBalance(ctx context.Context, in *GetOperatorB
 	return out, nil
 }
 
+func (c *relayerClient) SubmitMatch(ctx context.Context, in *SubmitMatchRequest, opts ...grpc.CallOption) (*SubmitMatchReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SubmitMatchReply)
+	err := c.cc.Invoke(ctx, Relayer_SubmitMatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *relayerClient) GetTransactionHashByOrderID(ctx context.Context, in *GetTransactionHashByOrderIDRequest, opts ...grpc.CallOption) (*GetTransactionHashByOrderIDReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTransactionHashByOrderIDReply)
+	err := c.cc.Invoke(ctx, Relayer_GetTransactionHashByOrderID_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RelayerServer is the server API for Relayer service.
 // All implementations must embed UnimplementedRelayerServer
 // for forward compatibility.
@@ -129,6 +155,10 @@ type RelayerServer interface {
 	GetBuilderFeeStats(context.Context, *GetBuilderFeeStatsRequest) (*GetBuilderFeeStatsReply, error)
 	// GetOperatorBalance 查询 Operator 余额
 	GetOperatorBalance(context.Context, *GetOperatorBalanceRequest) (*GetOperatorBalanceReply, error)
+	// SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
+	SubmitMatch(context.Context, *SubmitMatchRequest) (*SubmitMatchReply, error)
+	// GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
+	GetTransactionHashByOrderID(context.Context, *GetTransactionHashByOrderIDRequest) (*GetTransactionHashByOrderIDReply, error)
 	mustEmbedUnimplementedRelayerServer()
 }
 
@@ -156,6 +186,12 @@ func (UnimplementedRelayerServer) GetBuilderFeeStats(context.Context, *GetBuilde
 }
 func (UnimplementedRelayerServer) GetOperatorBalance(context.Context, *GetOperatorBalanceRequest) (*GetOperatorBalanceReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetOperatorBalance not implemented")
+}
+func (UnimplementedRelayerServer) SubmitMatch(context.Context, *SubmitMatchRequest) (*SubmitMatchReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method SubmitMatch not implemented")
+}
+func (UnimplementedRelayerServer) GetTransactionHashByOrderID(context.Context, *GetTransactionHashByOrderIDRequest) (*GetTransactionHashByOrderIDReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTransactionHashByOrderID not implemented")
 }
 func (UnimplementedRelayerServer) mustEmbedUnimplementedRelayerServer() {}
 func (UnimplementedRelayerServer) testEmbeddedByValue()                 {}
@@ -286,6 +322,42 @@ func _Relayer_GetOperatorBalance_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Relayer_SubmitMatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitMatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RelayerServer).SubmitMatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Relayer_SubmitMatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RelayerServer).SubmitMatch(ctx, req.(*SubmitMatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Relayer_GetTransactionHashByOrderID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTransactionHashByOrderIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RelayerServer).GetTransactionHashByOrderID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Relayer_GetTransactionHashByOrderID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RelayerServer).GetTransactionHashByOrderID(ctx, req.(*GetTransactionHashByOrderIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Relayer_ServiceDesc is the grpc.ServiceDesc for Relayer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -316,6 +388,14 @@ var Relayer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOperatorBalance",
 			Handler:    _Relayer_GetOperatorBalance_Handler,
+		},
+		{
+			MethodName: "SubmitMatch",
+			Handler:    _Relayer_SubmitMatch_Handler,
+		},
+		{
+			MethodName: "GetTransactionHashByOrderID",
+			Handler:    _Relayer_GetTransactionHashByOrderID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
