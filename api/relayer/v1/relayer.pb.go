@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v6.33.1
-// source: relayer/v1/relayer.proto
+// source: relayer.proto
 
 package v1
 
@@ -71,11 +71,11 @@ func (x TransactionType) String() string {
 }
 
 func (TransactionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_relayer_v1_relayer_proto_enumTypes[0].Descriptor()
+	return file_relayer_proto_enumTypes[0].Descriptor()
 }
 
 func (TransactionType) Type() protoreflect.EnumType {
-	return &file_relayer_v1_relayer_proto_enumTypes[0]
+	return &file_relayer_proto_enumTypes[0]
 }
 
 func (x TransactionType) Number() protoreflect.EnumNumber {
@@ -84,7 +84,7 @@ func (x TransactionType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TransactionType.Descriptor instead.
 func (TransactionType) EnumDescriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{0}
+	return file_relayer_proto_rawDescGZIP(), []int{0}
 }
 
 // WalletType 钱包类型枚举
@@ -121,11 +121,11 @@ func (x WalletType) String() string {
 }
 
 func (WalletType) Descriptor() protoreflect.EnumDescriptor {
-	return file_relayer_v1_relayer_proto_enumTypes[1].Descriptor()
+	return file_relayer_proto_enumTypes[1].Descriptor()
 }
 
 func (WalletType) Type() protoreflect.EnumType {
-	return &file_relayer_v1_relayer_proto_enumTypes[1]
+	return &file_relayer_proto_enumTypes[1]
 }
 
 func (x WalletType) Number() protoreflect.EnumNumber {
@@ -134,7 +134,7 @@ func (x WalletType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WalletType.Descriptor instead.
 func (WalletType) EnumDescriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{1}
+	return file_relayer_proto_rawDescGZIP(), []int{1}
 }
 
 // SubmitTransactionRequest 提交交易请求
@@ -153,7 +153,7 @@ type SubmitTransactionRequest struct {
 
 func (x *SubmitTransactionRequest) Reset() {
 	*x = SubmitTransactionRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[0]
+	mi := &file_relayer_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -165,7 +165,7 @@ func (x *SubmitTransactionRequest) String() string {
 func (*SubmitTransactionRequest) ProtoMessage() {}
 
 func (x *SubmitTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[0]
+	mi := &file_relayer_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -178,7 +178,7 @@ func (x *SubmitTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitTransactionRequest.ProtoReflect.Descriptor instead.
 func (*SubmitTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{0}
+	return file_relayer_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *SubmitTransactionRequest) GetTo() string {
@@ -242,7 +242,7 @@ type SubmitTransactionReply struct {
 
 func (x *SubmitTransactionReply) Reset() {
 	*x = SubmitTransactionReply{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[1]
+	mi := &file_relayer_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -254,7 +254,7 @@ func (x *SubmitTransactionReply) String() string {
 func (*SubmitTransactionReply) ProtoMessage() {}
 
 func (x *SubmitTransactionReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[1]
+	mi := &file_relayer_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -267,7 +267,7 @@ func (x *SubmitTransactionReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitTransactionReply.ProtoReflect.Descriptor instead.
 func (*SubmitTransactionReply) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{1}
+	return file_relayer_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SubmitTransactionReply) GetTaskId() string {
@@ -302,7 +302,7 @@ type SubmitBatchTransactionRequest struct {
 
 func (x *SubmitBatchTransactionRequest) Reset() {
 	*x = SubmitBatchTransactionRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[2]
+	mi := &file_relayer_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -314,7 +314,7 @@ func (x *SubmitBatchTransactionRequest) String() string {
 func (*SubmitBatchTransactionRequest) ProtoMessage() {}
 
 func (x *SubmitBatchTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[2]
+	mi := &file_relayer_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -327,7 +327,7 @@ func (x *SubmitBatchTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitBatchTransactionRequest.ProtoReflect.Descriptor instead.
 func (*SubmitBatchTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{2}
+	return file_relayer_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SubmitBatchTransactionRequest) GetTransactions() []*TransactionRequest {
@@ -360,7 +360,7 @@ type TransactionRequest struct {
 
 func (x *TransactionRequest) Reset() {
 	*x = TransactionRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[3]
+	mi := &file_relayer_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -372,7 +372,7 @@ func (x *TransactionRequest) String() string {
 func (*TransactionRequest) ProtoMessage() {}
 
 func (x *TransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[3]
+	mi := &file_relayer_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -385,7 +385,7 @@ func (x *TransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransactionRequest.ProtoReflect.Descriptor instead.
 func (*TransactionRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{3}
+	return file_relayer_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *TransactionRequest) GetTo() string {
@@ -449,7 +449,7 @@ type SubmitBatchTransactionReply struct {
 
 func (x *SubmitBatchTransactionReply) Reset() {
 	*x = SubmitBatchTransactionReply{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[4]
+	mi := &file_relayer_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -461,7 +461,7 @@ func (x *SubmitBatchTransactionReply) String() string {
 func (*SubmitBatchTransactionReply) ProtoMessage() {}
 
 func (x *SubmitBatchTransactionReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[4]
+	mi := &file_relayer_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -474,7 +474,7 @@ func (x *SubmitBatchTransactionReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitBatchTransactionReply.ProtoReflect.Descriptor instead.
 func (*SubmitBatchTransactionReply) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{4}
+	return file_relayer_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SubmitBatchTransactionReply) GetTaskIds() []string {
@@ -509,7 +509,7 @@ type DeployWalletRequest struct {
 
 func (x *DeployWalletRequest) Reset() {
 	*x = DeployWalletRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[5]
+	mi := &file_relayer_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -521,7 +521,7 @@ func (x *DeployWalletRequest) String() string {
 func (*DeployWalletRequest) ProtoMessage() {}
 
 func (x *DeployWalletRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[5]
+	mi := &file_relayer_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -534,7 +534,7 @@ func (x *DeployWalletRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeployWalletRequest.ProtoReflect.Descriptor instead.
 func (*DeployWalletRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{5}
+	return file_relayer_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *DeployWalletRequest) GetWalletType() WalletType {
@@ -564,7 +564,7 @@ type DeployWalletReply struct {
 
 func (x *DeployWalletReply) Reset() {
 	*x = DeployWalletReply{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[6]
+	mi := &file_relayer_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -576,7 +576,7 @@ func (x *DeployWalletReply) String() string {
 func (*DeployWalletReply) ProtoMessage() {}
 
 func (x *DeployWalletReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[6]
+	mi := &file_relayer_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -589,7 +589,7 @@ func (x *DeployWalletReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeployWalletReply.ProtoReflect.Descriptor instead.
 func (*DeployWalletReply) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{6}
+	return file_relayer_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DeployWalletReply) GetWalletAddress() string {
@@ -630,7 +630,7 @@ type GetTransactionStatusRequest struct {
 
 func (x *GetTransactionStatusRequest) Reset() {
 	*x = GetTransactionStatusRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[7]
+	mi := &file_relayer_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -642,7 +642,7 @@ func (x *GetTransactionStatusRequest) String() string {
 func (*GetTransactionStatusRequest) ProtoMessage() {}
 
 func (x *GetTransactionStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[7]
+	mi := &file_relayer_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -655,7 +655,7 @@ func (x *GetTransactionStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTransactionStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetTransactionStatusRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{7}
+	return file_relayer_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetTransactionStatusRequest) GetTaskId() string {
@@ -682,7 +682,7 @@ type TransactionStatus struct {
 
 func (x *TransactionStatus) Reset() {
 	*x = TransactionStatus{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[8]
+	mi := &file_relayer_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -694,7 +694,7 @@ func (x *TransactionStatus) String() string {
 func (*TransactionStatus) ProtoMessage() {}
 
 func (x *TransactionStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[8]
+	mi := &file_relayer_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -707,7 +707,7 @@ func (x *TransactionStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransactionStatus.ProtoReflect.Descriptor instead.
 func (*TransactionStatus) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{8}
+	return file_relayer_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *TransactionStatus) GetTaskId() string {
@@ -776,7 +776,7 @@ type GetTransactionStatusReply struct {
 
 func (x *GetTransactionStatusReply) Reset() {
 	*x = GetTransactionStatusReply{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[9]
+	mi := &file_relayer_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -788,7 +788,7 @@ func (x *GetTransactionStatusReply) String() string {
 func (*GetTransactionStatusReply) ProtoMessage() {}
 
 func (x *GetTransactionStatusReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[9]
+	mi := &file_relayer_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -801,7 +801,7 @@ func (x *GetTransactionStatusReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTransactionStatusReply.ProtoReflect.Descriptor instead.
 func (*GetTransactionStatusReply) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{9}
+	return file_relayer_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetTransactionStatusReply) GetStatus() *TransactionStatus {
@@ -823,7 +823,7 @@ type GetBuilderFeeStatsRequest struct {
 
 func (x *GetBuilderFeeStatsRequest) Reset() {
 	*x = GetBuilderFeeStatsRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[10]
+	mi := &file_relayer_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -835,7 +835,7 @@ func (x *GetBuilderFeeStatsRequest) String() string {
 func (*GetBuilderFeeStatsRequest) ProtoMessage() {}
 
 func (x *GetBuilderFeeStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[10]
+	mi := &file_relayer_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -848,7 +848,7 @@ func (x *GetBuilderFeeStatsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBuilderFeeStatsRequest.ProtoReflect.Descriptor instead.
 func (*GetBuilderFeeStatsRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{10}
+	return file_relayer_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetBuilderFeeStatsRequest) GetApiKey() string {
@@ -884,7 +884,7 @@ type FeeStatsByType struct {
 
 func (x *FeeStatsByType) Reset() {
 	*x = FeeStatsByType{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[11]
+	mi := &file_relayer_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -896,7 +896,7 @@ func (x *FeeStatsByType) String() string {
 func (*FeeStatsByType) ProtoMessage() {}
 
 func (x *FeeStatsByType) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[11]
+	mi := &file_relayer_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -909,7 +909,7 @@ func (x *FeeStatsByType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeStatsByType.ProtoReflect.Descriptor instead.
 func (*FeeStatsByType) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{11}
+	return file_relayer_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *FeeStatsByType) GetCount() int64 {
@@ -946,7 +946,7 @@ type GetBuilderFeeStatsReply struct {
 
 func (x *GetBuilderFeeStatsReply) Reset() {
 	*x = GetBuilderFeeStatsReply{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[12]
+	mi := &file_relayer_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -958,7 +958,7 @@ func (x *GetBuilderFeeStatsReply) String() string {
 func (*GetBuilderFeeStatsReply) ProtoMessage() {}
 
 func (x *GetBuilderFeeStatsReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[12]
+	mi := &file_relayer_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -971,7 +971,7 @@ func (x *GetBuilderFeeStatsReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBuilderFeeStatsReply.ProtoReflect.Descriptor instead.
 func (*GetBuilderFeeStatsReply) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{12}
+	return file_relayer_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetBuilderFeeStatsReply) GetTotalTransactions() int64 {
@@ -1012,7 +1012,7 @@ type GetOperatorBalanceRequest struct {
 
 func (x *GetOperatorBalanceRequest) Reset() {
 	*x = GetOperatorBalanceRequest{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[13]
+	mi := &file_relayer_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1024,7 +1024,7 @@ func (x *GetOperatorBalanceRequest) String() string {
 func (*GetOperatorBalanceRequest) ProtoMessage() {}
 
 func (x *GetOperatorBalanceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[13]
+	mi := &file_relayer_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1037,7 +1037,7 @@ func (x *GetOperatorBalanceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOperatorBalanceRequest.ProtoReflect.Descriptor instead.
 func (*GetOperatorBalanceRequest) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{13}
+	return file_relayer_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetOperatorBalanceRequest) GetOperatorAddress() string {
@@ -1059,7 +1059,7 @@ type GetOperatorBalanceReply struct {
 
 func (x *GetOperatorBalanceReply) Reset() {
 	*x = GetOperatorBalanceReply{}
-	mi := &file_relayer_v1_relayer_proto_msgTypes[14]
+	mi := &file_relayer_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1071,7 +1071,7 @@ func (x *GetOperatorBalanceReply) String() string {
 func (*GetOperatorBalanceReply) ProtoMessage() {}
 
 func (x *GetOperatorBalanceReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relayer_v1_relayer_proto_msgTypes[14]
+	mi := &file_relayer_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1084,7 +1084,7 @@ func (x *GetOperatorBalanceReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOperatorBalanceReply.ProtoReflect.Descriptor instead.
 func (*GetOperatorBalanceReply) Descriptor() ([]byte, []int) {
-	return file_relayer_v1_relayer_proto_rawDescGZIP(), []int{14}
+	return file_relayer_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetOperatorBalanceReply) GetOperatorAddress() string {
@@ -1108,11 +1108,11 @@ func (x *GetOperatorBalanceReply) GetBalanceMatic() string {
 	return ""
 }
 
-var File_relayer_v1_relayer_proto protoreflect.FileDescriptor
+var File_relayer_proto protoreflect.FileDescriptor
 
-const file_relayer_v1_relayer_proto_rawDesc = "" +
+const file_relayer_proto_rawDesc = "" +
 	"\n" +
-	"\x18relayer/v1/relayer.proto\x12\n" +
+	"\rrelayer.proto\x12\n" +
 	"relayer.v1\x1a\x1cgoogle/api/annotations.proto\"\xf5\x01\n" +
 	"\x18SubmitTransactionRequest\x12\x0e\n" +
 	"\x02to\x18\x01 \x01(\tR\x02to\x12\x12\n" +
@@ -1216,20 +1216,20 @@ const file_relayer_v1_relayer_proto_rawDesc = "" +
 	"\x12GetOperatorBalance\x12%.relayer.v1.GetOperatorBalanceRequest\x1a#.relayer.v1.GetOperatorBalanceReply\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/operator/balanceB0Z.xinyuan_tech/relayer-service/api/relayer/v1;v1b\x06proto3"
 
 var (
-	file_relayer_v1_relayer_proto_rawDescOnce sync.Once
-	file_relayer_v1_relayer_proto_rawDescData []byte
+	file_relayer_proto_rawDescOnce sync.Once
+	file_relayer_proto_rawDescData []byte
 )
 
-func file_relayer_v1_relayer_proto_rawDescGZIP() []byte {
-	file_relayer_v1_relayer_proto_rawDescOnce.Do(func() {
-		file_relayer_v1_relayer_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_relayer_v1_relayer_proto_rawDesc), len(file_relayer_v1_relayer_proto_rawDesc)))
+func file_relayer_proto_rawDescGZIP() []byte {
+	file_relayer_proto_rawDescOnce.Do(func() {
+		file_relayer_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_relayer_proto_rawDesc), len(file_relayer_proto_rawDesc)))
 	})
-	return file_relayer_v1_relayer_proto_rawDescData
+	return file_relayer_proto_rawDescData
 }
 
-var file_relayer_v1_relayer_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_relayer_v1_relayer_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
-var file_relayer_v1_relayer_proto_goTypes = []any{
+var file_relayer_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_relayer_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_relayer_proto_goTypes = []any{
 	(TransactionType)(0),                  // 0: relayer.v1.TransactionType
 	(WalletType)(0),                       // 1: relayer.v1.WalletType
 	(*SubmitTransactionRequest)(nil),      // 2: relayer.v1.SubmitTransactionRequest
@@ -1249,7 +1249,7 @@ var file_relayer_v1_relayer_proto_goTypes = []any{
 	(*GetOperatorBalanceReply)(nil),       // 16: relayer.v1.GetOperatorBalanceReply
 	nil,                                   // 17: relayer.v1.GetBuilderFeeStatsReply.ByTypeEntry
 }
-var file_relayer_v1_relayer_proto_depIdxs = []int32{
+var file_relayer_proto_depIdxs = []int32{
 	0,  // 0: relayer.v1.SubmitTransactionRequest.transaction_type:type_name -> relayer.v1.TransactionType
 	5,  // 1: relayer.v1.SubmitBatchTransactionRequest.transactions:type_name -> relayer.v1.TransactionRequest
 	0,  // 2: relayer.v1.TransactionRequest.transaction_type:type_name -> relayer.v1.TransactionType
@@ -1276,27 +1276,27 @@ var file_relayer_v1_relayer_proto_depIdxs = []int32{
 	0,  // [0:7] is the sub-list for field type_name
 }
 
-func init() { file_relayer_v1_relayer_proto_init() }
-func file_relayer_v1_relayer_proto_init() {
-	if File_relayer_v1_relayer_proto != nil {
+func init() { file_relayer_proto_init() }
+func file_relayer_proto_init() {
+	if File_relayer_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_relayer_v1_relayer_proto_rawDesc), len(file_relayer_v1_relayer_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_relayer_proto_rawDesc), len(file_relayer_proto_rawDesc)),
 			NumEnums:      2,
 			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_relayer_v1_relayer_proto_goTypes,
-		DependencyIndexes: file_relayer_v1_relayer_proto_depIdxs,
-		EnumInfos:         file_relayer_v1_relayer_proto_enumTypes,
-		MessageInfos:      file_relayer_v1_relayer_proto_msgTypes,
+		GoTypes:           file_relayer_proto_goTypes,
+		DependencyIndexes: file_relayer_proto_depIdxs,
+		EnumInfos:         file_relayer_proto_enumTypes,
+		MessageInfos:      file_relayer_proto_msgTypes,
 	}.Build()
-	File_relayer_v1_relayer_proto = out.File
-	file_relayer_v1_relayer_proto_goTypes = nil
-	file_relayer_v1_relayer_proto_depIdxs = nil
+	File_relayer_proto = out.File
+	file_relayer_proto_goTypes = nil
+	file_relayer_proto_depIdxs = nil
 }

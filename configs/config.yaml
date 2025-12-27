@@ -11,7 +11,7 @@ server:
 data:
   database:
     driver: mysql
-    source: root:@tcp(localhost:3306)/relayer_service?charset=utf8mb4&parseTime=True&loc=Local
+    source: root:@tcp(localhost:3306)/prediction_relayer_service?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     network: tcp
     addr: localhost:6379

@@ -20,7 +20,7 @@ RUN_MAIN=cmd/server/main.go cmd/server/wire_gen.go
 TEST_DB_HOST ?= 127.0.0.1
 TEST_DB_PORT ?= 3306
 TEST_DB_USER ?= root
-TEST_DB_NAME ?= relayer_service
+TEST_DB_NAME ?= prediction_relayer_service
 
 MYSQL_CMD = mysql -h $(TEST_DB_HOST) -P $(TEST_DB_PORT) -u $(TEST_DB_USER) -D $(TEST_DB_NAME)
 ifneq ($(TEST_DB_PASSWORD),)

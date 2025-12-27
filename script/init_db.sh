@@ -15,7 +15,7 @@ DB_HOST="localhost"
 DB_PORT="3306"
 DB_USER="root"
 DB_PASS=""
-DB_NAME="relayer_service"
+DB_NAME="prediction_relayer_service"
 
 echo -e "${GREEN}=== Prediction Relayer Service 数据库初始化 ===${NC}"
 

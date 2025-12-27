@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.9.0
 // - protoc             v6.33.1
-// source: relayer/v1/relayer.proto
+// source: relayer.proto
 
 package v1
 

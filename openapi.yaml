@@ -1,0 +1,345 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Relayer API
+    version: 0.0.1
+paths:
+    /v1/builder/fees:
+        get:
+            tags:
+                - Relayer
+            description: GetBuilderFeeStats 查询 Builder 费用统计
+            operationId: Relayer_GetBuilderFeeStats
+            parameters:
+                - name: apiKey
+                  in: query
+                  schema:
+                    type: string
+                - name: startTime
+                  in: query
+                  schema:
+                    type: string
+                - name: endTime
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetBuilderFeeStatsReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/operator/balance:
+        get:
+            tags:
+                - Relayer
+            description: GetOperatorBalance 查询 Operator 余额
+            operationId: Relayer_GetOperatorBalance
+            parameters:
+                - name: operatorAddress
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetOperatorBalanceReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/status/{taskId}:
+        get:
+            tags:
+                - Relayer
+            description: GetTransactionStatus 查询交易状态
+            operationId: Relayer_GetTransactionStatus
+            parameters:
+                - name: taskId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetTransactionStatusReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/submit:
+        post:
+            tags:
+                - Relayer
+            description: SubmitTransaction 提交单笔交易
+            operationId: Relayer_SubmitTransaction
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SubmitTransactionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SubmitTransactionReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/submit/batch:
+        post:
+            tags:
+                - Relayer
+            description: SubmitBatchTransaction 提交批量交易
+            operationId: Relayer_SubmitBatchTransaction
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SubmitBatchTransactionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SubmitBatchTransactionReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/wallet/deploy:
+        post:
+            tags:
+                - Relayer
+            description: DeployWallet 部署钱包（Safe Wallet）
+            operationId: Relayer_DeployWallet
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeployWalletRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeployWalletReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        DeployWalletReply:
+            type: object
+            properties:
+                walletAddress:
+                    type: string
+                taskId:
+                    type: string
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: DeployWalletReply 部署钱包响应
+        DeployWalletRequest:
+            type: object
+            properties:
+                walletType:
+                    type: integer
+                    format: enum
+                owners:
+                    type: array
+                    items:
+                        type: string
+            description: DeployWalletRequest 部署钱包请求
+        FeeStatsByType:
+            type: object
+            properties:
+                count:
+                    type: string
+                gasUsed:
+                    type: string
+                cost:
+                    type: string
+            description: FeeStatsByType 按类型统计的费用
+        GetBuilderFeeStatsReply:
+            type: object
+            properties:
+                totalTransactions:
+                    type: string
+                totalGasUsed:
+                    type: string
+                totalCost:
+                    type: string
+                byType:
+                    type: object
+                    additionalProperties:
+                        $ref: '#/components/schemas/FeeStatsByType'
+            description: GetBuilderFeeStatsReply 查询 Builder 费用统计响应
+        GetOperatorBalanceReply:
+            type: object
+            properties:
+                operatorAddress:
+                    type: string
+                balance:
+                    type: string
+                balanceMatic:
+                    type: string
+            description: GetOperatorBalanceReply 查询 Operator 余额响应
+        GetTransactionStatusReply:
+            type: object
+            properties:
+                status:
+                    $ref: '#/components/schemas/TransactionStatus'
+            description: GetTransactionStatusReply 查询交易状态响应
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        SubmitBatchTransactionReply:
+            type: object
+            properties:
+                taskIds:
+                    type: array
+                    items:
+                        type: string
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: SubmitBatchTransactionReply 批量提交交易响应
+        SubmitBatchTransactionRequest:
+            type: object
+            properties:
+                transactions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TransactionRequest'
+                builderApiKey:
+                    type: string
+            description: SubmitBatchTransactionRequest 批量提交交易请求
+        SubmitTransactionReply:
+            type: object
+            properties:
+                taskId:
+                    type: string
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: SubmitTransactionReply 提交交易响应
+        SubmitTransactionRequest:
+            type: object
+            properties:
+                to:
+                    type: string
+                data:
+                    type: string
+                signature:
+                    type: string
+                forwarder:
+                    type: string
+                gasLimit:
+                    type: string
+                transactionType:
+                    type: integer
+                    format: enum
+                value:
+                    type: string
+            description: SubmitTransactionRequest 提交交易请求
+        TransactionRequest:
+            type: object
+            properties:
+                to:
+                    type: string
+                data:
+                    type: string
+                signature:
+                    type: string
+                forwarder:
+                    type: string
+                gasLimit:
+                    type: string
+                transactionType:
+                    type: integer
+                    format: enum
+                value:
+                    type: string
+            description: TransactionRequest 单笔交易请求（用于批量）
+        TransactionStatus:
+            type: object
+            properties:
+                taskId:
+                    type: string
+                txHash:
+                    type: string
+                status:
+                    type: string
+                gasPrice:
+                    type: string
+                blockNumber:
+                    type: string
+                gasUsed:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+            description: TransactionStatus 交易状态
+tags:
+    - name: Relayer
