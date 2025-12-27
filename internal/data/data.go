@@ -123,3 +123,4 @@ func (d *Data) Redis() *redis.Client {
 	return d.redis
 }
 
+

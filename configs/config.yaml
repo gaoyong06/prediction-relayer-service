@@ -11,7 +11,7 @@ server:
 data:
   database:
     driver: mysql
-    source: root:password@tcp(localhost:3306)/relayer_service?charset=utf8mb4&parseTime=True&loc=Local
+    source: root:@tcp(localhost:3306)/relayer_service?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     network: tcp
     addr: localhost:6379
@@ -47,103 +47,3 @@ security:
   rate_limit_per_minute: 100
   kms_type: local  # local, aws-kms, vault
   kms_config: ""  # KMS 配置（JSON 字符串，对于 local 类型是 base64 编码的密钥）
-
-  http:
-    network: tcp
-    addr: 0.0.0.0:8117
-    timeout: 30s
-  grpc:
-    network: tcp
-    addr: 0.0.0.0:9117
-    timeout: 30s
-
-data:
-  database:
-    driver: mysql
-    source: root:password@tcp(localhost:3306)/relayer_service?charset=utf8mb4&parseTime=True&loc=Local
-  redis:
-    network: tcp
-    addr: localhost:6379
-    read_timeout: 5s
-    write_timeout: 5s
-  rocketmq:
-    name_server: 127.0.0.1:9876
-    producer_group: relayer_service_producer_group
-    topic: relayer_events
-    retry_times: 2
-
-chain:
-  rpc_url: https://polygon-rpc.com
-  chain_id: "137"
-  gas_price_multiplier: 110  # 110% (加权 10% 以加速)
-  max_retry: 3
-
-operator:
-  wallets:
-    - address: ""  # Operator 地址（从环境变量读取）
-      private_key: ""  # 私钥（加密存储或从 KMS 获取，从环境变量读取）
-      active: true
-  min_balance_wei: 1000000000000000000  # 1 MATIC
-
-builder:
-  timestamp_window_ms: 300000  # 5 分钟（毫秒）
-  enable_auth: true
-
-security:
-  contract_whitelist:
-    - "0x..."  # CTF Exchange 合约地址
-    - "0x..."  # Proxy Factory 合约地址
-  rate_limit_per_minute: 100
-  kms_type: local  # local, aws-kms, vault
-  kms_config: ""  # KMS 配置（JSON 字符串，对于 local 类型是 base64 编码的密钥）
-
-  http:
-    network: tcp
-    addr: 0.0.0.0:8117
-    timeout: 30s
-  grpc:
-    network: tcp
-    addr: 0.0.0.0:9117
-    timeout: 30s
-
-data:
-  database:
-    driver: mysql
-    source: root:password@tcp(localhost:3306)/relayer_service?charset=utf8mb4&parseTime=True&loc=Local
-  redis:
-    network: tcp
-    addr: localhost:6379
-    read_timeout: 5s
-    write_timeout: 5s
-  rocketmq:
-    name_server: 127.0.0.1:9876
-    producer_group: relayer_service_producer_group
-    topic: relayer_events
-    retry_times: 2
-
-chain:
-  rpc_url: https://polygon-rpc.com
-  chain_id: "137"
-  gas_price_multiplier: 110  # 110% (加权 10% 以加速)
-  max_retry: 3
-
-operator:
-  wallets:
-    - address: ""  # Operator 地址（从环境变量读取）
-      private_key: ""  # 私钥（加密存储或从 KMS 获取，从环境变量读取）
-      active: true
-  min_balance_wei: 1000000000000000000  # 1 MATIC
-
-builder:
-  timestamp_window_ms: 300000  # 5 分钟（毫秒）
-  enable_auth: true
-
-security:
-  contract_whitelist:
-    - "0x..."  # CTF Exchange 合约地址
-    - "0x..."  # Proxy Factory 合约地址
-  rate_limit_per_minute: 100
-  kms_type: local  # local, aws-kms, vault
-  kms_config: ""  # KMS 配置（JSON 字符串，对于 local 类型是 base64 编码的密钥）
-
-

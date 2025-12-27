@@ -234,3 +234,4 @@ CREATE TABLE IF NOT EXISTS operators (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Operator 钱包管理表';
 
 
+

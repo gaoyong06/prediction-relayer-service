@@ -130,3 +130,4 @@ func (s *authService) BuildHMACSignature(secret string, timestamp int64, method,
 	return hex.EncodeToString(signature)
 }
 
+

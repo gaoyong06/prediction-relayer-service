@@ -266,3 +266,4 @@ func (r *operatorRepo) UpdateStatus(ctx context.Context, address string, status 
 		Update("status", status).Error
 }
 
+

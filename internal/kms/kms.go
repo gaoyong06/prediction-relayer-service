@@ -122,3 +122,4 @@ func (k *localKMS) Encrypt(ctx context.Context, plainData string) (string, error
 	return base64.StdEncoding.EncodeToString(encrypted), nil
 }
 
+

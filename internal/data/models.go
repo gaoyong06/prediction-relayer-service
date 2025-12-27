@@ -85,3 +85,4 @@ func (Operator) TableName() string {
 	return "operators"
 }
 
+

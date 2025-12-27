@@ -116,3 +116,4 @@ func (m *manager) GetCurrentNonce(ctx context.Context, operator string) (uint64,
 	return uint64(op.CurrentNonce), nil
 }
 
+
