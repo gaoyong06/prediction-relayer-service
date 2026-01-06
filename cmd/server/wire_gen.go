@@ -13,8 +13,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"gorm.io/gorm"
 	"math/big"
-	"strconv"
-	"time"
 	"prediction-relayer-service/internal/auth"
 	"prediction-relayer-service/internal/biz"
 	"prediction-relayer-service/internal/conf"
@@ -26,6 +24,8 @@ import (
 	"prediction-relayer-service/internal/nonce"
 	"prediction-relayer-service/internal/server"
 	"prediction-relayer-service/internal/service"
+	"strconv"
+	"time"
 )
 
 import (

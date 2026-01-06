@@ -891,7 +891,7 @@ const file_config_proto_rawDesc = "" +
 	"\x15rate_limit_per_minute\x18\x02 \x01(\x03R\x12rateLimitPerMinute\x12\x19\n" +
 	"\bkms_type\x18\x03 \x01(\tR\akmsType\x12\x1d\n" +
 	"\n" +
-	"kms_config\x18\x04 \x01(\tR\tkmsConfigB1Z/prediction-relayer-service/internal/conf;confb\x06proto3"
+	"kms_config\x18\x04 \x01(\tR\tkmsConfigB/Z-prediction-relayer-service/internal/conf;confb\x06proto3"
 
 var (
 	file_config_proto_rawDescOnce sync.Once
