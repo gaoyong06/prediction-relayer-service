@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"xinyuan_tech/relayer-service/internal/conf"
+	"prediction-relayer-service/internal/conf"
 
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
@@ -128,5 +128,3 @@ func (r *rocketmqProducer) Close() error {
 	}
 	return nil
 }
-
-

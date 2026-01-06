@@ -11,6 +11,7 @@ HTTP_PORT=8119
 GRPC_PORT=9119
 TEST_CONFIG=test/api/api-test-config.yaml
 CONF_PROTO_PATH=internal/conf/config.proto
+RUN_MODE=debug
 
 # 构建配置
 BUILD_OUTPUT=./bin/relayer-service

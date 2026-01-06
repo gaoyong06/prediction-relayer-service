@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	v1 "xinyuan_tech/relayer-service/api/relayer/v1"
-	"xinyuan_tech/relayer-service/internal/auth"
-	"xinyuan_tech/relayer-service/internal/biz"
+	v1 "prediction-relayer-service/api/relayer/v1"
+	"prediction-relayer-service/internal/auth"
+	"prediction-relayer-service/internal/biz"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/grpc/metadata"
@@ -341,4 +341,3 @@ func (s *RelayerService) GetTransactionHashByOrderID(ctx context.Context, req *v
 		Message:         "transaction hash retrieved successfully",
 	}, nil
 }
-

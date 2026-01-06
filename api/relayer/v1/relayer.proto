@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package relayer.v1;
 
-option go_package = "xinyuan_tech/relayer-service/api/relayer/v1;v1";
+option go_package = "prediction-relayer-service/api/relayer/v1;v1";
 
 import "google/api/annotations.proto";
 

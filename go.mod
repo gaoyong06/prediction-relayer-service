@@ -1,4 +1,4 @@
-module xinyuan_tech/relayer-service
+module prediction-relayer-service
 
 go 1.25.1
 

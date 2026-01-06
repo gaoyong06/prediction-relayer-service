@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"time"
 
-	"xinyuan_tech/relayer-service/internal/auth"
-	"xinyuan_tech/relayer-service/internal/data"
-	"xinyuan_tech/relayer-service/internal/executor"
-	"xinyuan_tech/relayer-service/internal/fee"
+	"prediction-relayer-service/internal/auth"
+	"prediction-relayer-service/internal/data"
+	"prediction-relayer-service/internal/executor"
+	"prediction-relayer-service/internal/fee"
 
 	"github.com/google/uuid"
 )
@@ -364,4 +364,3 @@ func (s *relayerService) GetTransactionHashByOrderID(ctx context.Context, orderI
 	}
 	return tx.TxHash, nil
 }
-

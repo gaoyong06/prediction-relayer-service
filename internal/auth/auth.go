@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"time"
 
-	"xinyuan_tech/relayer-service/internal/data"
+	"prediction-relayer-service/internal/data"
 )
 
 // AuthService Builder 认证服务接口
@@ -129,5 +129,3 @@ func (s *authService) BuildHMACSignature(secret string, timestamp int64, method,
 	// 返回 hex 编码的签名
 	return hex.EncodeToString(signature)
 }
-
-

@@ -1709,7 +1709,7 @@ const file_relayer_proto_rawDesc = "" +
 	"\x12GetBuilderFeeStats\x12%.relayer.v1.GetBuilderFeeStatsRequest\x1a#.relayer.v1.GetBuilderFeeStatsReply\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/builder/fees\x12~\n" +
 	"\x12GetOperatorBalance\x12%.relayer.v1.GetOperatorBalanceRequest\x1a#.relayer.v1.GetOperatorBalanceReply\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/operator/balance\x12a\n" +
 	"\vSubmitMatch\x12\x1e.relayer.v1.SubmitMatchRequest\x1a\x1c.relayer.v1.SubmitMatchReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/match\x12\xa6\x01\n" +
-	"\x1bGetTransactionHashByOrderID\x12..relayer.v1.GetTransactionHashByOrderIDRequest\x1a,.relayer.v1.GetTransactionHashByOrderIDReply\")\x82\xd3\xe4\x93\x02#\x12!/v1/orders/{order_id}/transactionB0Z.xinyuan_tech/relayer-service/api/relayer/v1;v1b\x06proto3"
+	"\x1bGetTransactionHashByOrderID\x12..relayer.v1.GetTransactionHashByOrderIDRequest\x1a,.relayer.v1.GetTransactionHashByOrderIDReply\")\x82\xd3\xe4\x93\x02#\x12!/v1/orders/{order_id}/transactionB0Z.prediction-relayer-service/api/relayer/v1;v1b\x06proto3"
 
 var (
 	file_relayer_proto_rawDescOnce sync.Once

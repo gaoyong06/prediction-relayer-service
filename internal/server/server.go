@@ -3,10 +3,10 @@ package server
 import (
 	"context"
 
-	v1 "xinyuan_tech/relayer-service/api/relayer/v1"
-	"xinyuan_tech/relayer-service/internal/conf"
-	"xinyuan_tech/relayer-service/internal/monitor"
-	"xinyuan_tech/relayer-service/internal/service"
+	v1 "prediction-relayer-service/api/relayer/v1"
+	"prediction-relayer-service/internal/conf"
+	"prediction-relayer-service/internal/monitor"
+	"prediction-relayer-service/internal/service"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
@@ -87,5 +87,3 @@ func (r *MonitorRunner) Start(ctx context.Context) error {
 	}()
 	return nil
 }
-
-

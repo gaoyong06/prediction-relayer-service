@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"xinyuan_tech/relayer-service/internal/data"
+	"prediction-relayer-service/internal/data"
 
 	"gorm.io/gorm"
 )
@@ -115,5 +115,3 @@ func (m *manager) GetCurrentNonce(ctx context.Context, operator string) (uint64,
 
 	return uint64(op.CurrentNonce), nil
 }
-
-

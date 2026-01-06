@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"xinyuan_tech/relayer-service/internal/data"
+	"prediction-relayer-service/internal/data"
 )
 
 // Tracker 费用追踪器接口
@@ -83,5 +83,3 @@ func (t *tracker) CalculateCost(gasUsed uint64, gasPriceStr string) (string, err
 	// 这里简化处理，返回整数部分
 	return cost.String(), nil
 }
-
-

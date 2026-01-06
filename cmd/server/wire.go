@@ -15,17 +15,17 @@ import (
 	"github.com/google/wire"
 	"gorm.io/gorm"
 
-	"xinyuan_tech/relayer-service/internal/auth"
-	"xinyuan_tech/relayer-service/internal/biz"
-	"xinyuan_tech/relayer-service/internal/conf"
-	"xinyuan_tech/relayer-service/internal/data"
-	"xinyuan_tech/relayer-service/internal/executor"
-	"xinyuan_tech/relayer-service/internal/fee"
-	"xinyuan_tech/relayer-service/internal/kms"
-	"xinyuan_tech/relayer-service/internal/monitor"
-	"xinyuan_tech/relayer-service/internal/nonce"
-	"xinyuan_tech/relayer-service/internal/server"
-	"xinyuan_tech/relayer-service/internal/service"
+	"prediction-relayer-service/internal/auth"
+	"prediction-relayer-service/internal/biz"
+	"prediction-relayer-service/internal/conf"
+	"prediction-relayer-service/internal/data"
+	"prediction-relayer-service/internal/executor"
+	"prediction-relayer-service/internal/fee"
+	"prediction-relayer-service/internal/kms"
+	"prediction-relayer-service/internal/monitor"
+	"prediction-relayer-service/internal/nonce"
+	"prediction-relayer-service/internal/server"
+	"prediction-relayer-service/internal/service"
 )
 
 func wireApp(c *conf.Bootstrap, logger log.Logger) (*kratos.App, func(), error) {
@@ -133,5 +133,3 @@ func NewKMS(c *conf.Security) (kms.KMS, error) {
 	}
 	return kms.NewKMS(kmsType, kmsConfig)
 }
-
-

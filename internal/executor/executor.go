@@ -6,8 +6,8 @@ import (
 	"math/big"
 	"time"
 
-	"xinyuan_tech/relayer-service/internal/data"
-	"xinyuan_tech/relayer-service/internal/nonce"
+	"prediction-relayer-service/internal/data"
+	"prediction-relayer-service/internal/nonce"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -195,5 +195,3 @@ func (e *executor) SelectOperator(ctx context.Context) (*data.Operator, error) {
 	index := time.Now().Unix() % int64(len(operators))
 	return operators[index], nil
 }
-
-

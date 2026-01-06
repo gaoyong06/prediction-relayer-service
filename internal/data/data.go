@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"xinyuan_tech/relayer-service/internal/conf"
+	"prediction-relayer-service/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/redis/go-redis/v9"
@@ -122,5 +122,3 @@ func (d *Data) DB() *gorm.DB {
 func (d *Data) Redis() *redis.Client {
 	return d.redis
 }
-
-

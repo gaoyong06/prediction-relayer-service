@@ -6,8 +6,8 @@ import (
 	"math/big"
 	"time"
 
-	"xinyuan_tech/relayer-service/internal/data"
-	"xinyuan_tech/relayer-service/internal/executor"
+	"prediction-relayer-service/internal/data"
+	"prediction-relayer-service/internal/executor"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -184,5 +184,3 @@ func (m *monitor) replaceByFee(ctx context.Context, tx *data.Transaction) error 
 
 	return nil
 }
-
-
