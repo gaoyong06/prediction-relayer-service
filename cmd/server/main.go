@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"os"
 
 	"prediction-relayer-service/internal/conf"
@@ -92,6 +93,11 @@ func main() {
 	var bc conf.Bootstrap
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
+	}
+
+	// 验证配置
+	if err := bc.Validate(); err != nil {
+		panic(fmt.Sprintf("config validation failed: %v", err))
 	}
 
 	logCfg := &logger.Config{
