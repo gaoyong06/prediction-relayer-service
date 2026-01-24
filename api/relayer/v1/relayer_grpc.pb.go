@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.0
 // - protoc             v6.33.1
-// source: relayer.proto
+// source: relayer/v1/relayer.proto
 
 package v1
 
@@ -399,5 +399,5 @@ var Relayer_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "relayer.proto",
+	Metadata: "relayer/v1/relayer.proto",
 }

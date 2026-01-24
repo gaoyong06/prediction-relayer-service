@@ -29,7 +29,7 @@ service Relayer {
   // SubmitTransaction 提交单笔交易
   rpc SubmitTransaction (SubmitTransactionRequest) returns (SubmitTransactionReply) {
     option (google.api.http) = {
-      post: "/v1/submit"
+      post: "/prediction-relayer/v1/submit"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service Relayer {
   // SubmitBatchTransaction 提交批量交易
   rpc SubmitBatchTransaction (SubmitBatchTransactionRequest) returns (SubmitBatchTransactionReply) {
     option (google.api.http) = {
-      post: "/v1/submit/batch"
+      post: "/prediction-relayer/v1/submit/batch"
       body: "*"
     };
   }
@@ -45,7 +45,7 @@ service Relayer {
   // DeployWallet 部署钱包（Safe Wallet）
   rpc DeployWallet (DeployWalletRequest) returns (DeployWalletReply) {
     option (google.api.http) = {
-      post: "/v1/wallet/deploy"
+      post: "/prediction-relayer/v1/wallet/deploy"
       body: "*"
     };
   }
@@ -53,28 +53,28 @@ service Relayer {
   // GetTransactionStatus 查询交易状态
   rpc GetTransactionStatus (GetTransactionStatusRequest) returns (GetTransactionStatusReply) {
     option (google.api.http) = {
-      get: "/v1/status/{task_id}"
+      get: "/prediction-relayer/v1/status/{task_id}"
     };
   }
 
   // GetBuilderFeeStats 查询 Builder 费用统计
   rpc GetBuilderFeeStats (GetBuilderFeeStatsRequest) returns (GetBuilderFeeStatsReply) {
     option (google.api.http) = {
-      get: "/v1/builder/fees"
+      get: "/prediction-relayer/v1/builder/fees"
     };
   }
 
   // GetOperatorBalance 查询 Operator 余额
   rpc GetOperatorBalance (GetOperatorBalanceRequest) returns (GetOperatorBalanceReply) {
     option (google.api.http) = {
-      get: "/v1/operator/balance"
+      get: "/prediction-relayer/v1/operator/balance"
     };
   }
 
   // SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
   rpc SubmitMatch (SubmitMatchRequest) returns (SubmitMatchReply) {
     option (google.api.http) = {
-      post: "/v1/match"
+      post: "/prediction-relayer/v1/match"
       body: "*"
     };
   }
@@ -82,7 +82,7 @@ service Relayer {
   // GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
   rpc GetTransactionHashByOrderID (GetTransactionHashByOrderIDRequest) returns (GetTransactionHashByOrderIDReply) {
     option (google.api.http) = {
-      get: "/v1/orders/{order_id}/transaction"
+      get: "/prediction-relayer/v1/orders/{order_id}/transaction"
     };
   }
 }

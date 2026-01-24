@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.9.0
 // - protoc             v6.33.1
-// source: relayer.proto
+// source: relayer/v1/relayer.proto
 
 package v1
 
@@ -49,14 +49,14 @@ type RelayerHTTPServer interface {
 
 func RegisterRelayerHTTPServer(s *http.Server, srv RelayerHTTPServer) {
 	r := s.Route("/")
-	r.POST("/v1/submit", _Relayer_SubmitTransaction0_HTTP_Handler(srv))
-	r.POST("/v1/submit/batch", _Relayer_SubmitBatchTransaction0_HTTP_Handler(srv))
-	r.POST("/v1/wallet/deploy", _Relayer_DeployWallet0_HTTP_Handler(srv))
-	r.GET("/v1/status/{task_id}", _Relayer_GetTransactionStatus0_HTTP_Handler(srv))
-	r.GET("/v1/builder/fees", _Relayer_GetBuilderFeeStats0_HTTP_Handler(srv))
-	r.GET("/v1/operator/balance", _Relayer_GetOperatorBalance0_HTTP_Handler(srv))
-	r.POST("/v1/match", _Relayer_SubmitMatch0_HTTP_Handler(srv))
-	r.GET("/v1/orders/{order_id}/transaction", _Relayer_GetTransactionHashByOrderID0_HTTP_Handler(srv))
+	r.POST("/prediction-relayer/v1/submit", _Relayer_SubmitTransaction0_HTTP_Handler(srv))
+	r.POST("/prediction-relayer/v1/submit/batch", _Relayer_SubmitBatchTransaction0_HTTP_Handler(srv))
+	r.POST("/prediction-relayer/v1/wallet/deploy", _Relayer_DeployWallet0_HTTP_Handler(srv))
+	r.GET("/prediction-relayer/v1/status/{task_id}", _Relayer_GetTransactionStatus0_HTTP_Handler(srv))
+	r.GET("/prediction-relayer/v1/builder/fees", _Relayer_GetBuilderFeeStats0_HTTP_Handler(srv))
+	r.GET("/prediction-relayer/v1/operator/balance", _Relayer_GetOperatorBalance0_HTTP_Handler(srv))
+	r.POST("/prediction-relayer/v1/match", _Relayer_SubmitMatch0_HTTP_Handler(srv))
+	r.GET("/prediction-relayer/v1/orders/{order_id}/transaction", _Relayer_GetTransactionHashByOrderID0_HTTP_Handler(srv))
 }
 
 func _Relayer_SubmitTransaction0_HTTP_Handler(srv RelayerHTTPServer) func(ctx http.Context) error {
@@ -259,7 +259,7 @@ func NewRelayerHTTPClient(client *http.Client) RelayerHTTPClient {
 // DeployWallet DeployWallet 部署钱包（Safe Wallet）
 func (c *RelayerHTTPClientImpl) DeployWallet(ctx context.Context, in *DeployWalletRequest, opts ...http.CallOption) (*DeployWalletReply, error) {
 	var out DeployWalletReply
-	pattern := "/v1/wallet/deploy"
+	pattern := "/prediction-relayer/v1/wallet/deploy"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationRelayerDeployWallet))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -273,7 +273,7 @@ func (c *RelayerHTTPClientImpl) DeployWallet(ctx context.Context, in *DeployWall
 // GetBuilderFeeStats GetBuilderFeeStats 查询 Builder 费用统计
 func (c *RelayerHTTPClientImpl) GetBuilderFeeStats(ctx context.Context, in *GetBuilderFeeStatsRequest, opts ...http.CallOption) (*GetBuilderFeeStatsReply, error) {
 	var out GetBuilderFeeStatsReply
-	pattern := "/v1/builder/fees"
+	pattern := "/prediction-relayer/v1/builder/fees"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationRelayerGetBuilderFeeStats))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -287,7 +287,7 @@ func (c *RelayerHTTPClientImpl) GetBuilderFeeStats(ctx context.Context, in *GetB
 // GetOperatorBalance GetOperatorBalance 查询 Operator 余额
 func (c *RelayerHTTPClientImpl) GetOperatorBalance(ctx context.Context, in *GetOperatorBalanceRequest, opts ...http.CallOption) (*GetOperatorBalanceReply, error) {
 	var out GetOperatorBalanceReply
-	pattern := "/v1/operator/balance"
+	pattern := "/prediction-relayer/v1/operator/balance"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationRelayerGetOperatorBalance))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -301,7 +301,7 @@ func (c *RelayerHTTPClientImpl) GetOperatorBalance(ctx context.Context, in *GetO
 // GetTransactionHashByOrderID GetTransactionHashByOrderID 根据订单 ID 获取交易哈希
 func (c *RelayerHTTPClientImpl) GetTransactionHashByOrderID(ctx context.Context, in *GetTransactionHashByOrderIDRequest, opts ...http.CallOption) (*GetTransactionHashByOrderIDReply, error) {
 	var out GetTransactionHashByOrderIDReply
-	pattern := "/v1/orders/{order_id}/transaction"
+	pattern := "/prediction-relayer/v1/orders/{order_id}/transaction"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationRelayerGetTransactionHashByOrderID))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -315,7 +315,7 @@ func (c *RelayerHTTPClientImpl) GetTransactionHashByOrderID(ctx context.Context,
 // GetTransactionStatus GetTransactionStatus 查询交易状态
 func (c *RelayerHTTPClientImpl) GetTransactionStatus(ctx context.Context, in *GetTransactionStatusRequest, opts ...http.CallOption) (*GetTransactionStatusReply, error) {
 	var out GetTransactionStatusReply
-	pattern := "/v1/status/{task_id}"
+	pattern := "/prediction-relayer/v1/status/{task_id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationRelayerGetTransactionStatus))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -329,7 +329,7 @@ func (c *RelayerHTTPClientImpl) GetTransactionStatus(ctx context.Context, in *Ge
 // SubmitBatchTransaction SubmitBatchTransaction 提交批量交易
 func (c *RelayerHTTPClientImpl) SubmitBatchTransaction(ctx context.Context, in *SubmitBatchTransactionRequest, opts ...http.CallOption) (*SubmitBatchTransactionReply, error) {
 	var out SubmitBatchTransactionReply
-	pattern := "/v1/submit/batch"
+	pattern := "/prediction-relayer/v1/submit/batch"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationRelayerSubmitBatchTransaction))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -343,7 +343,7 @@ func (c *RelayerHTTPClientImpl) SubmitBatchTransaction(ctx context.Context, in *
 // SubmitMatch SubmitMatch 提交订单匹配结果（用于 CLOB 订单执行）
 func (c *RelayerHTTPClientImpl) SubmitMatch(ctx context.Context, in *SubmitMatchRequest, opts ...http.CallOption) (*SubmitMatchReply, error) {
 	var out SubmitMatchReply
-	pattern := "/v1/match"
+	pattern := "/prediction-relayer/v1/match"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationRelayerSubmitMatch))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -357,7 +357,7 @@ func (c *RelayerHTTPClientImpl) SubmitMatch(ctx context.Context, in *SubmitMatch
 // SubmitTransaction SubmitTransaction 提交单笔交易
 func (c *RelayerHTTPClientImpl) SubmitTransaction(ctx context.Context, in *SubmitTransactionRequest, opts ...http.CallOption) (*SubmitTransactionReply, error) {
 	var out SubmitTransactionReply
-	pattern := "/v1/submit"
+	pattern := "/prediction-relayer/v1/submit"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationRelayerSubmitTransaction))
 	opts = append(opts, http.PathTemplate(pattern))

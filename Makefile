@@ -3,7 +3,7 @@
 
 SERVICE_NAME=prediction-relayer-service
 API_PROTO_PATH=api/relayer/v1/relayer.proto
-API_PROTO_DIR=api/relayer/v1
+API_PROTO_DIR=api
 
 # 服务特定配置
 SERVICE_DISPLAY_NAME=Prediction Relayer Service

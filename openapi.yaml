@@ -6,7 +6,7 @@ info:
     title: Relayer API
     version: 0.0.1
 paths:
-    /v1/builder/fees:
+    /prediction-relayer/v1/builder/fees:
         get:
             tags:
                 - Relayer
@@ -38,7 +38,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/match:
+    /prediction-relayer/v1/match:
         post:
             tags:
                 - Relayer
@@ -63,7 +63,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/operator/balance:
+    /prediction-relayer/v1/operator/balance:
         get:
             tags:
                 - Relayer
@@ -87,7 +87,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/orders/{orderId}/transaction:
+    /prediction-relayer/v1/orders/{orderId}/transaction:
         get:
             tags:
                 - Relayer
@@ -112,7 +112,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/status/{taskId}:
+    /prediction-relayer/v1/status/{taskId}:
         get:
             tags:
                 - Relayer
@@ -137,7 +137,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/submit:
+    /prediction-relayer/v1/submit:
         post:
             tags:
                 - Relayer
@@ -162,7 +162,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/submit/batch:
+    /prediction-relayer/v1/submit/batch:
         post:
             tags:
                 - Relayer
@@ -187,7 +187,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/wallet/deploy:
+    /prediction-relayer/v1/wallet/deploy:
         post:
             tags:
                 - Relayer
