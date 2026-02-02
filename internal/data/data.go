@@ -57,16 +57,6 @@ func NewDB(c *conf.Data, logger log.Logger) (*gorm.DB, func(), error) {
 		return nil, nil, err
 	}
 
-	// 自动迁移
-	if err := db.AutoMigrate(
-		&Transaction{},
-		&Builder{},
-		&BuilderFee{},
-		&Operator{},
-	); err != nil {
-		return nil, nil, err
-	}
-
 	logHelper.Info("Database connected and migrated")
 
 	cleanup := func() {
