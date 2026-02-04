@@ -106,13 +106,8 @@ func main() {
 		Output:   "stdout",
 		FilePath: "",
 	}
-	appLogger := logger.NewLogger(logCfg)
+	appLogger, _ := logger.InitLogger(logCfg, id, Name, Version)
 	appLogger = log.With(appLogger,
-		"ts", log.DefaultTimestamp,
-		"caller", log.DefaultCaller,
-		"service.id", id,
-		"service.name", Name,
-		"service.version", Version,
 		"trace.id", tracing.TraceID(),
 		"span.id", tracing.SpanID(),
 	)
